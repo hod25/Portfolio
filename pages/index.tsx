@@ -1,7 +1,6 @@
 "use client";
 
 import Head from 'next/head';
-import styles from "./page.module.css";
 
 type ProjectCardProps = {
   title: string;

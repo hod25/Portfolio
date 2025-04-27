@@ -1,6 +1,5 @@
 # Node.js
 node_modules/
-package-lock.json
 npm-debug.log*
 
 # Build output
@@ -12,6 +11,5 @@ node_modules/
 out/
 .env
 tsconfig.json
-package.json
 next-env.d.ts
 
