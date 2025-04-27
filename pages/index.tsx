@@ -67,32 +67,29 @@ export default function Home() {
               description="An IoT-based monitoring system for mushroom cultivation environments, using sensors and automated control."
               link="https://github.com/hod25/mushroom-monitor"
             />
-<section className="github-activity">
-  <h2>My GitHub Activity</h2>
-  <img
-    src="https://github-readme-stats.vercel.app/api?username=hod25&show_icons=true&theme=default&hide=contribs,prs"
-    alt="GitHub Stats"
-    style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
-  />
-  <img
-    src="https://github-readme-streak-stats.herokuapp.com/?user=hod25&theme=default"
-    alt="GitHub Streak"
-    style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
-  />
-</section>
-
+            <section className="github-activity">
+              <h2>My GitHub Activity</h2>
+              <img
+                src="https://github-readme-stats.vercel.app/api?username=hod25&show_icons=true&theme=default&hide=contribs,prs"
+                alt="GitHub Stats"
+                style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
+              />
+              <img
+                src="https://github-readme-streak-stats.herokuapp.com/?user=hod25&theme=default"
+                alt="GitHub Streak"
+                style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
+              />
+            </section>
           </div>
-          
-        </section>
-        <section className="github-activity">
-  <h2>GitHub Contributions</h2>
-  <img
-src="https://github-readme-activity-graph.vercel.app/graph?username=hod25&theme=react"
-alt="GitHub Contribution Graph"
-    style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
-  />
-</section>
-
+          </section>
+          <section className="github-activity">
+            <h2>GitHub Contributions</h2>
+            <img
+          src="https://github-readme-activity-graph.vercel.app/graph?username=hod25&theme=react"
+          alt="GitHub Contribution Graph"
+              style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
+            />
+          </section>
       </main>
     </div>
   );
