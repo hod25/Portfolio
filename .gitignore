@@ -1,0 +1,17 @@
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Build output
+dist/
+build/
+
+node_modules/
+.next/
+out/
+.env
+tsconfig.json
+package.json
+next-env.d.ts
+
