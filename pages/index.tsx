@@ -59,12 +59,12 @@ export default function Home() {
       </Head>
       <main className="container">
                 {/* כפתור שינוי מצב כהה */}
-        <button
+{/*         <button
           className="dark-mode-toggle"
           onClick={() => setDarkMode(!darkMode)}
         >
           {darkMode ? 'Light Mode' : 'Dark Mode'}
-        </button>
+        </button> */}
         <h1>Hello, I'm Hod Mitrany</h1>
         <p>I'm a Computer Science student passionate about backend development, DevOps, full-stack web apps, and IoT projects. Here are some of my works:</p>
 
