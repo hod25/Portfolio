@@ -1,6 +1,6 @@
 "use client";
 
-import ReadmeViewer from "./ReadmeViewer"; // מייבאים את הקומפוננטה
+import ReadmeViewer from "./ReadmeViewer"; 
 
 type RepoCardProps = {
   name: string;
@@ -23,9 +23,9 @@ export default function RepoCard({ name, description, html_url, language }: Repo
       {/* <p className="text-sm text-blue-500">{language}</p> */}
       <a
         href={html_url}
+        className="view-button"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-2 inline-block text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
       >
         {/* {name} */}
         View on GitHub

@@ -9,48 +9,61 @@ type ReadmeViewerProps = {
 
 export default function ReadmeViewer({ repoUrl }: ReadmeViewerProps) {
   const [content, setContent] = useState<string>("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchReadme() {
+      setLoading(true);
+      setError(false);
+      setContent("");
+
       try {
         const cleanedUrl = repoUrl
           .replace("https://github.com/", "")
           .replace(/\/(tree|blob)\/[^\/]+/, "");
 
-        let response = await fetch(`https://raw.githubusercontent.com/${cleanedUrl}/main/README.md`);
-        if (!response.ok) {
-          response = await fetch(`https://raw.githubusercontent.com/${cleanedUrl}/master/README.md`);
+        const branches = ["main", "master"];
+        let markdown: string | null = null;
+
+        for (const branch of branches) {
+          const res = await fetch(`https://raw.githubusercontent.com/${cleanedUrl}/${branch}/README.md`);
+          if (res.ok) {
+            markdown = await res.text();
+            break;
+          }
         }
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch README from both main and master branches");
+        if (!markdown) {
+          setError(true);
+          return;
         }
 
-        const markdown = await response.text();
-
-        // חיתוך עד הקו התוחם הראשון (---)
+        // Extract top section before "---" or fallback to 10 lines
         const lines = markdown.split('\n');
         const separatorIndex = lines.findIndex(line => line.trim() === '---');
-        const relevantLines = separatorIndex !== -1 ? lines.slice(0, separatorIndex) : lines.slice(0, 10); // ברירת מחדל: 10 שורות אם אין ---
+        const relevantLines = separatorIndex !== -1 ? lines.slice(0, separatorIndex) : lines.slice(0, 7);
         const partialMarkdown = relevantLines.join('\n');
 
-        const html = marked(partialMarkdown, { async: false });
+        const html: string = await marked.parse(partialMarkdown);
         setContent(html);
-      } catch (error) {
-        console.error("Error loading README:", error);
+      } catch (e) {
+        console.error("Error loading README:", e);
+        setError(true);
+      } finally {
+        setLoading(false);
       }
     }
 
     fetchReadme();
   }, [repoUrl]);
 
-  if (!content) {
-    return <p>טוען את התוכן...</p>;
-  }
+  if (loading) return <p className="text-gray-500 italic">Loading README...</p>;
+  if (error) return <p className="text-red-500 italic">No README found for this repository.</p>;
 
   return (
     <div
-      className="prose mx-auto p-4"
+      className="prose mx-auto p-4 bg-white rounded shadow max-w-2xl"
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );

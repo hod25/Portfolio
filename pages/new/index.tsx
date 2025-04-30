@@ -14,35 +14,9 @@ type ProjectCardProps = {
   link?: string;
 };
 
-function ProjectCard({ title, description, link }: ProjectCardProps) {
-  const [showReadme, setShowReadme] = useState(false);
-
-  return (
-    <div className="project-card">
-      <h3>{title}</h3>
-      <p>{description}</p>
-      {link && (
-        <>
-          {/* כפתור להציג README
-          <button onClick={() => setShowReadme(!showReadme)} className="view-button">
-            {showReadme ?'Show README' : 'Hide README'}
-          </button> */}
-
-          {/* לינק רגיל ל-GitHub */}
-          <a href={link} target="_blank" rel="noopener noreferrer" className="view-button">
-            {title}
-          </a>
-
-          {/* הצגת README */}
-          {showReadme && <ReadmeViewer repoUrl={link} />}
-        </>
-      )}
-    </div>
-  );
-}
 
 export default function Home() {
-  const username = "hod25"; // תוכל לשנות פה לפי מה שתרצה
+  const username = "hod25"; 
   const [repos, setRepos] = useState<any[]>([]);
 
   useEffect(() => {
@@ -94,7 +68,7 @@ export default function Home() {
           className="dark-mode-toggle"
           onClick={() => setDarkMode(!darkMode)}
         >
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
         <h1>Hello, I'm Hod Mitrany</h1>
         <p>I'm a Computer Science student passionate about backend development, DevOps, full-stack web apps, and IoT projects. Here are some of my works:</p>

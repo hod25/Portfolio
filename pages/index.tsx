@@ -116,14 +116,6 @@ export default function Home() {
             </section>
           </div>
           </section>
-          {/* <section className="github-activity">
-            <h2>GitHub Contributions</h2>
-            <img
-          src="https://github-readme-activity-graph.vercel.app/graph?username=hod25&theme=react"
-          alt="GitHub Contribution Graph"
-              style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
-            />
-          </section> */}
       </main>
     </div>
   );
