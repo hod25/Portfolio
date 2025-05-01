@@ -88,7 +88,7 @@ body.dark-mode .project-card h3 {
   border-radius: 8px;
   padding: 1.2rem;
   background: #fff;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -96,7 +96,20 @@ body.dark-mode .project-card h3 {
 
 .project-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f1f1f1;
 }
+
+/* במצב כהה */
+body.dark-mode .project-card {
+  background-color: #2c2c2c;
+  border-color: #444;
+}
+
+body.dark-mode .project-card:hover {
+  background-color: #3a3a3a;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
 
 /* כפתור לצפייה בריפו */
 .view-button {
@@ -203,9 +216,11 @@ body.dark-mode .dark-mode-toggle:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  min-height: calc(100vh - 100px); /* שומר מקום ל-header/footer אם צריך */
+  padding: 2rem;
   text-align: center;
 }
+
 
 .search-title {
   font-size: 2rem;
@@ -253,3 +268,50 @@ body.dark-mode .search-form input {
 body.dark-mode .search-form button {
   background-color: #4a90e2;
 }
+
+.try-button {
+  display: inline-block;
+  background-color: #0070f3;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.try-button:hover {
+  background-color: #005bb5;
+}
+
+.try-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.site-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+body.dark-mode .site-footer {
+  color: #aaa;
+}
+
+/* עטיפת כל הדף */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* תוכן עיקרי */
+.container {
+  flex: 1;
+  padding-bottom: 2rem; /* מרווח מה-footer */
+}
+

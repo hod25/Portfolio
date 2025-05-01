@@ -72,7 +72,9 @@ export default function Home() {
         </button>
         <h1>Hello, I'm Hod Mitrany</h1>
         <p>I'm a Computer Science student passionate about backend development, DevOps, full-stack web apps, and IoT projects. Here are some of my works:</p>
-
+        <div className="try-button-container">
+          <a href="/search" className="try-button">Try it yourself 🔍</a>
+        </div>
         <section className="projects-section">
           <h2>Highlighted Projects</h2>
           <div className="projects-grid">
@@ -88,7 +90,10 @@ export default function Home() {
           ))}
           </div>
           </section>
-      </main>
+          </main>
+      <footer className="site-footer">
+        © {new Date().getFullYear()} Built by Hod Mitrany
+      </footer>
     </div>
   );
 }

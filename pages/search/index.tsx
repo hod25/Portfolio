@@ -172,7 +172,10 @@ export default function Home() {
         </section>
       </>
     )}
-  </main>
-    </div>
+    </main>
+  <footer className="site-footer">
+    © {new Date().getFullYear()} Built by Hod Mitrany
+  </footer>
+  </div>
   );
 }
