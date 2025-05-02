@@ -1,7 +1,11 @@
 "use client";;
 
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useState, useEffect } from 'react';
+import ReadmeViewer from '../components/ReadmeViewer'; 
+
+import RepoCard from "../components/RepoCard";
+import { fetchRepos } from "../lib/github";
 
 type ProjectCardProps = {
   title: string;
@@ -9,21 +13,20 @@ type ProjectCardProps = {
   link?: string;
 };
 
-function ProjectCard({ title, description, link }: ProjectCardProps) {
-  return (
-    <div className="project-card">
-      <h3>{title}</h3>
-      <p>{description}</p>
-      {link && (
-        <a href={link} target="_blank" rel="noopener noreferrer" className="view-button">
-          View on GitHub
-        </a>
-      )}
-    </div>
-  );
-}
 
 export default function Home() {
+  const username = "hod25"; 
+  const [repos, setRepos] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchRepositories = async () => {
+      const fetchedRepos = await fetchRepos(username);
+      setRepos(fetchedRepos);
+    };
+
+    fetchRepositories();
+  }, []);
+
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // זיהוי המצב של המערכת והגדרת המצב הראשוני
@@ -46,7 +49,6 @@ export default function Home() {
     } else {
       document.body.classList.remove('dark-mode');
     }
-
     // שמירה על המצב של המצב כהה
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
@@ -54,69 +56,42 @@ export default function Home() {
   return (
     <div>
       <Head>
+      <link rel="icon" href="/favicon.ico" />
         <title>Hod Mitrany - Portfolio</title>
         <meta name="description" content="Portfolio of Hod Mitrany - Software Developer" />
       </Head>
       <main className="container">
-                {/* כפתור שינוי מצב כהה */}
+        {/* כפתור שינוי מצב כהה */}
         <button
           className="dark-mode-toggle"
           onClick={() => setDarkMode(!darkMode)}
         >
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
         <h1>Hello, I'm Hod Mitrany</h1>
         <p>I'm a Computer Science student passionate about backend development, DevOps, full-stack web apps, and IoT projects. Here are some of my works:</p>
-
+        <div className="try-button-container">
+          <a href="/search" className="try-button">Try it yourself 🔍</a>
+        </div>
         <section className="projects-section">
           <h2>Highlighted Projects</h2>
           <div className="projects-grid">
-
-            <ProjectCard
-              title="RESTful API Project"
-              description="A complete RESTful API built with Node.js, Express, TypeScript, MongoDB, fully documented with Swagger and tested with Jest."
-              link="https://github.com/hod25/Internet-Project"
+ 
+            {repos.map((repo: any) => (
+            <RepoCard
+            key={repo.id}
+            name={repo.name}
+            description={repo.description}
+            html_url={repo.html_url}
+            language={repo.language}
             />
-
-            <ProjectCard
-              title="Portfolio Website"
-              description="My personal portfolio website built using Next.js and TypeScript, showcasing my work and background."
-              link="https://github.com/hod25/portfolio"
-            />
-
-            <ProjectCard
-              title="DishFor - Mobile App"
-              description="A full-stack mobile app developed with Kotlin, Firebase, and Cloudinary."
-              link="https://github.com/hod25/Cellular-Project"
-            />
-
-            <ProjectCard
-              title="Smart Home Lab"
-              description="Custom-built smart home automations using Home Assistant, Reolink camera integration, energy monitoring, and MQTT devices."
-              link="https://github.com/hod25/smart-home"
-            />
-
-            <ProjectCard
-              title="Mushroom Monitoring System"
-              description="An IoT-based monitoring system for mushroom cultivation environments, using sensors and automated control."
-              link="https://github.com/hod25/mushroom-monitor"
-            />
-            <section className="github-activity">
-              <h2>My GitHub Activity</h2>
-              <img
-                src="https://github-readme-stats.vercel.app/api?username=hod25&show_icons=true&theme=default&hide=contribs,prs"
-                alt="GitHub Stats"
-                style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
-              />
-              <img
-                src="https://github-readme-streak-stats.herokuapp.com/?user=hod25&theme=default"
-                alt="GitHub Streak"
-                style={{ maxWidth: "100%", height: "auto", marginTop: "1rem" }}
-              />
-            </section>
+          ))}
           </div>
           </section>
-      </main>
+          </main>
+      <footer className="site-footer">
+        © {new Date().getFullYear()} Built by Hod Mitrany
+      </footer>
     </div>
-  );
+  );  
 }

@@ -13,3 +13,4 @@ out/
 tsconfig.json
 next-env.d.ts
 
+.env.local

@@ -7,7 +7,6 @@ import ReadmeViewer from '../../components/ReadmeViewer';
 import RepoCard from "../../components/RepoCard";
 import { fetchRepos } from "../../lib/github";
 
-
 type ProjectCardProps = {
   title: string;
   description: string;
@@ -50,7 +49,6 @@ export default function Home() {
     } else {
       document.body.classList.remove('dark-mode');
     }
-
     // שמירה על המצב של המצב כהה
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
@@ -95,5 +93,5 @@ export default function Home() {
         © {new Date().getFullYear()} Built by Hod Mitrany
       </footer>
     </div>
-  );
+  );  
 }

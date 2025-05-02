@@ -3,6 +3,26 @@ export async function fetchRepos(username: string) {
   if (!res.ok) {
     throw new Error('Failed to fetch repos');
   }
-  const data = await res.json();
-  return data;
+
+  const repos = await res.json();
+
+  const filteredRepos = await Promise.all(
+    repos.map(async (repo: any) => {
+      const branches = ['main', 'master'];
+      for (const branch of branches) {
+        const readmeUrl = `https://raw.githubusercontent.com/${username}/${repo.name}/${branch}/README.md`;
+        const response = await fetch(readmeUrl);
+        if (response.ok) {
+          const content = await response.text();
+          const lines = content.split('\n').filter(line => line.trim() !== '');
+          if (lines.length >= 2) {
+            return repo;
+          }
+        }
+      }
+      return null;
+    })
+  );
+
+  return filteredRepos.filter(Boolean);
 }

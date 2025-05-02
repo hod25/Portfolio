@@ -39,8 +39,16 @@ export default function ReadmeViewer({ repoUrl }: ReadmeViewerProps) {
           return;
         }
 
-        // Extract top section before "---" or fallback to 10 lines
-        const lines = markdown.split('\n');
+        // סינון שורות ריקות
+        const lines = markdown.split('\n').filter(line => line.trim().length > 0);
+
+        // אם יש שורה אחת או פחות — נחשיב את זה כרידמי לא משמעותי
+        if (lines.length <= 1) {
+          setError(true);
+          return;
+        }
+
+        // חיתוך לפי "---" או 7 שורות
         const separatorIndex = lines.findIndex(line => line.trim() === '---');
         const relevantLines = separatorIndex !== -1 ? lines.slice(0, separatorIndex) : lines.slice(0, 7);
         const partialMarkdown = relevantLines.join('\n');
@@ -58,8 +66,7 @@ export default function ReadmeViewer({ repoUrl }: ReadmeViewerProps) {
     fetchReadme();
   }, [repoUrl]);
 
-  if (loading) return <p className="text-gray-500 italic">Loading README...</p>;
-  if (error) return <p className="text-red-500 italic">No README found for this repository.</p>;
+  if (loading || error || !content) return null; 
 
   return (
     <div
