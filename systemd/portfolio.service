@@ -1,0 +1,17 @@
+[Unit]
+Description=Hod Mitrany Portfolio Website
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/Portfolio
+ExecStartPre=/usr/bin/npm install
+ExecStartPre=/usr/bin/npm run build
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
