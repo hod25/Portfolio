@@ -325,3 +325,22 @@ body.dark-mode .site-footer {
   border-color: #444;
 }
 
+.show-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.show-more-button {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.show-more-button:hover {
+  background-color: #0059c1;
+}

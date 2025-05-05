@@ -45,6 +45,8 @@ export default function Home() {
   const [repos, setRepos] = useState<any[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(4);
+
 
 
   useEffect(() => {
@@ -159,16 +161,26 @@ export default function Home() {
         <section className="projects-section">
           <h2>Highlighted Projects</h2>
           <div className="projects-grid">
-            {repos.slice(0, 8).map((repo: any) => (
-              <RepoCard
-                key={repo.id}
-                name={repo.name}
-                description={repo.description}
-                html_url={repo.html_url}
-                language={repo.language}
-              />
-            ))}
-          </div>
+          {repos.slice(0, visibleCount).map((repo: any) => (
+          <RepoCard
+            key={repo.id}
+            name={repo.name}
+            description={repo.description}
+            html_url={repo.html_url}
+            language={repo.language}
+          />
+         ))}
+         </div>
+           {visibleCount < repos.length && (
+            <div className="show-more-container">
+              <button
+                className="show-more-button"
+                onClick={() => setVisibleCount(visibleCount + 4)}
+              >
+                Show More
+              </button>
+            </div>
+          )} 
         </section>
       </>
     )}
