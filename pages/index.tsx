@@ -56,8 +56,8 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <title>Hod Mitrany - Portfolio</title>
+      <link rel="icon" href="/Black Briefcase Icon.png" />
+      <title>Hod Mitrany - Portfolio</title>
         <meta name="description" content="Portfolio of Hod Mitrany - Software Developer" />
       </Head>
       <main className="container">
@@ -69,7 +69,7 @@ export default function Home() {
         {darkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
         <h1>Hello, I'm Hod Mitrany</h1>
-        <p>I'm a Computer Science student passionate about backend development, DevOps, full-stack web apps, and IoT projects. Here are some of my works:</p>
+        <p>Software developer with a passion for backend, DevOps, and full-stack development.</p>
         <div className="profile-links">
           <a href="https://www.linkedin.com/in/hod-mitrany/" target="_blank"><FaLinkedin/>LinkedIn</a>
           <a href="https://github.com/hod25" target="_blank">  <FaGithub /> GitHub          </a>
