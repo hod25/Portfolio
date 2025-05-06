@@ -344,3 +344,15 @@ body.dark-mode .site-footer {
 .show-more-button:hover {
   background-color: #0059c1;
 }
+
+.profile-links {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.dark-mode .profile-links a {
+  text-decoration: none;
+  color: #0070f3;
+}
+
