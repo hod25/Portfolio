@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "prebuild": "tsx scripts/download-resume.ts",
+        "prebuild": "npx tsx scripts/download-resume.ts",
         "build": "next build",
         "start": "next start",
         "export": "next export"
