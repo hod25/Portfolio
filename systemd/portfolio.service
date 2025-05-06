@@ -7,6 +7,7 @@ Type=simple
 User=root
 WorkingDirectory=/root/Portfolio
 ExecStartPre=/usr/bin/npm install
+ExecStartPre=/usr/bin/npm run prebuild
 ExecStartPre=/usr/bin/npm run build
 ExecStart=/usr/bin/npm start
 Restart=always
