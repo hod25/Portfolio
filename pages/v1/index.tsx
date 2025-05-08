@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import ReadmeViewer from '../../components/ReadmeViewer'; 
 import { FaLinkedin, FaGithub, FaFilePdf, FaFileAlt } from 'react-icons/fa';
 import RepoCard from "../../components/RepoCard";
-import { fetchRepos } from "../../lib/github";
+import { fetchRepos, fetchUser } from "../../lib/github_hod";
 
 type ProjectCardProps = {
   title: string;
@@ -17,16 +17,23 @@ type ProjectCardProps = {
 export default function Home() {
   const username = "hod25"; 
   const [repos, setRepos] = useState<any[]>([]);
+  const [bio, setBio] = useState<string>("");
+
 
   useEffect(() => {
-    const fetchRepositories = async () => {
-      const fetchedRepos = await fetchRepos(username);
+    const fetchData = async () => {
+      const [fetchedRepos, userData] = await Promise.all([
+        fetchRepos(username),
+        fetchUser(username),
+      ]);
+  
       setRepos(fetchedRepos);
+      setBio(userData.bio);
     };
-
-    fetchRepositories();
+  
+    fetchData();
   }, []);
-
+  
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // זיהוי המצב של המערכת והגדרת המצב הראשוני
@@ -69,7 +76,7 @@ export default function Home() {
         {darkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
         <h1>Hello, I'm Hod Mitrany</h1>
-        <p>Software developer with a passion for backend, DevOps, and full-stack development.</p>
+        <p>{bio}</p>
         <div className="profile-links">
           <a href="https://www.linkedin.com/in/hod-mitrany/" target="_blank"><FaLinkedin/>LinkedIn</a>
           <a href="https://github.com/hod25" target="_blank">  <FaGithub /> GitHub          </a>
