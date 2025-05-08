@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/Black Briefcase Icon.png" />
         <title>Hod Mitrany - Portfolio</title>
         <meta name="description" content="Portfolio of Hod Mitrany - Software Developer" />
       </Head>

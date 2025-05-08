@@ -110,7 +110,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/Black Briefcase Icon.png" />
         <title>Portfolio</title>
         <meta name="description" content="Portfolio from GitHub" />
       </Head>
