@@ -1,30 +1,30 @@
 #!/bin/bash
 
-# שמור את הנתיב של הריפו המקורי (כלומר הקובץ הזה)
+# Save the path of the original repo (i.e., this script)
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 REPO_DIR=$(dirname "$SCRIPT_DIR")
 
-# הגדר נתיב זמני לשיבוט הריפו
+# Define a temporary path for cloning the repo
 TEMP_DIR="/root/Portfolio_temp"
 
-echo "📦 מוחק את התיקייה הזמנית אם קיימת..."
+echo "📦 Removing temporary directory if it exists..."
 rm -rf "$TEMP_DIR"
 
-echo "📥 קלאונינג מהריפו המקורי..."
+echo "📥 Cloning from the original repository..."
 git clone https://github.com/hod25/Portfolio.git "$TEMP_DIR"
 
-echo "📦 מתקין חבילות..."
+echo "📦 Installing packages..."
 cd "$TEMP_DIR" || exit 1
 npm install
 
-echo "⚙️ בונה את הפרויקט..."
+echo "⚙️ Building the project..."
 npm run build
 
-echo "🚚 מחליף גרסה ישנה בחדשה..."
+echo "🚚 Replacing old version with the new one..."
 rm -rf "$REPO_DIR"
 mv "$TEMP_DIR" "$REPO_DIR"
 
-echo "🔁 מריץ מחדש את השירות..."
+echo "🔁 Restarting the service..."
 systemctl restart portfolio
 
-echo "✅ סיום פריסה בהצלחה."
+echo "✅ Deployment completed successfully."
