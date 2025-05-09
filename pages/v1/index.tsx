@@ -79,7 +79,7 @@ export default function Home() {
         <p>{bio}</p>
         <div className="profile-links">
           <a href="https://www.linkedin.com/in/hod-mitrany/" target="_blank"><FaLinkedin/>LinkedIn</a>
-          <a href="https://github.com/hod25" target="_blank">  <FaGithub /> GitHub          </a>
+          <a href="https://github.com/hod25" target="_blank"><FaGithub /> GitHub</a>
           <a href="/Hod_Mitrany_Resume.pdf" target="_blank"><FaFilePdf/>Resume (PDF)</a>
           <a href="https://docs.google.com/document/d/1oCLnmsEQrpIXQk7-LObgFLzX1nPyVlUW/edit?usp=sharing&ouid=100594456677724045614&rtpof=true&sd=true" target="_blank"><FaFileAlt/>Resume (Docs)</a>
         </div>
