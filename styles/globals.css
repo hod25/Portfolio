@@ -170,6 +170,10 @@ button.dark-mode-toggle {
   z-index: 1000;
 }
 
+button.dark-mode-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 /* מצב כהה */
 body.dark-mode {
   background-color: #121212;
