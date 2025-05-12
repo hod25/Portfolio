@@ -171,7 +171,7 @@ button.dark-mode-toggle {
 }
 
 button.dark-mode-toggle:hover {
-  background-color: rgba(0, 0, 0, 0.461);
+  background-color: rgba(0, 0, 0, 0.297);
 }
 
 /* מצב כהה */
@@ -394,5 +394,4 @@ body.dark-mode .site-footer {
   background-color: #66b2ff;
   color: black;
 }
-
 
