@@ -171,7 +171,7 @@ button.dark-mode-toggle {
 }
 
 button.dark-mode-toggle:hover {
-  background-color: rgba(0, 0, 0, 0.297);
+  background-color: rgba(0, 0, 0, 0.461);
 }
 
 /* מצב כהה */
@@ -394,4 +394,76 @@ body.dark-mode .site-footer {
   background-color: #66b2ff;
   color: black;
 }
+
+.resume-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.resume-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  z-index: 10;
+  min-width: 160px;
+}
+
+.resume-menu a {
+  display: block;
+  padding: 6px 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.resume-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+/* מצב כהה */
+body.dark-mode .resume-menu {
+  background-color: #333;
+  border-color: #555;
+}
+
+body.dark-mode .resume-menu a {
+  color: white;
+}
+
+body.dark-mode .resume-menu a:hover {
+  background-color: #444;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #ccc;
+  border-top: 5px solid #0070f3; /* כחול */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.6); /* רקע בהיר חצי שקוף */
+    z-index: 1000;
+  }
+  
 
