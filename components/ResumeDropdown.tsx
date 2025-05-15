@@ -18,17 +18,22 @@ export default function ResumeDropdown() {
   }, []);
 
   return (
-    <span className="resume-dropdown">
-    <a onClick={() => setOpen(!open)} style={{ cursor: "pointer" }}>
+    <div className="resume-dropdown" ref={ref}>
+      <a onClick={() => setOpen(!open)} className="profile-link">
         <FaFileAlt /> Resume
       </a>
       {open && (
         <div className="resume-menu">
           <a href="/Hod_Mitrany_Resume.pdf" download>Download PDF</a>
           <a href="/Hod_Mitrany_Resume.pdf" target="_blank">View PDF</a>
-          <a href="https://docs.google.com/document/d/1oCLnmsEQrpIXQk7-LObgFLzX1nPyVlUW/edit?usp=sharing" target="_blank">Google Docs</a>
+          <a
+            href="https://docs.google.com/document/d/1oCLnmsEQrpIXQk7-LObgFLzX1nPyVlUW/edit?usp=sharing"
+            target="_blank"
+          >
+            Google Docs
+          </a>
         </div>
       )}
-    </span>
+    </div>
   );
 }

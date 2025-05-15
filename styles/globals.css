@@ -424,6 +424,37 @@ body.dark-mode .site-footer {
   background-color: #f0f0f0;
 }
 
+/* איחוד למחלקת כפתור משותפת */
+.profile-link {
+  text-decoration: none;
+  color: #0070f3;
+  border: 2px solid #0070f3;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-link:hover {
+  background-color: #0070f3;
+  color: white;
+}
+
+/* מצב כהה */
+.dark-mode .profile-link {
+  color: #66b2ff;
+  border-color: #66b2ff;
+}
+
+.dark-mode .profile-link:hover {
+  background-color: #66b2ff;
+  color: black;
+}
+
 /* מצב כהה */
 body.dark-mode .resume-menu {
   background-color: #333;
