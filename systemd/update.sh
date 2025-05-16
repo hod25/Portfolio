@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e  # עוצר את הסקריפט אם יש שגיאה כלשהי
+
 # Save the path of the original repo (i.e., this script)
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 REPO_DIR=$(dirname "$SCRIPT_DIR")
@@ -21,8 +23,17 @@ echo "⚙️ Building the project..."
 npm run build
 
 echo "🚚 Replacing old version with the new one..."
-rm -rf "$REPO_DIR"
-mv "$TEMP_DIR" "$REPO_DIR"
+# move out of the target directory before removing it
+cd /root
+
+# Safety check: don't allow deletion of "/" or empty path
+if [[ -n "$REPO_DIR" && "$REPO_DIR" != "/" && "$REPO_DIR" != "$TEMP_DIR" ]]; then
+    rm -rf "$REPO_DIR"
+    mv "$TEMP_DIR" "$REPO_DIR"
+else
+    echo "❌ ERROR: REPO_DIR='$REPO_DIR' is invalid or unsafe. Aborting."
+    exit 1
+fi
 
 echo "🔁 Restarting the service..."
 systemctl restart portfolio
