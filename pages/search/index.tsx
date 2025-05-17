@@ -46,40 +46,40 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(4);
-
-
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchRepositories = async () => {
       if (submitted && username) {
+        setLoading(true); // התחלת טעינה
         try {
-          setError(null); // איפוס שגיאה
+          setError(null);
           const { repos: fetchedRepos, user } = await fetchRepos(username);
-    
+  
           if (!user) {
             setError("User not found on GitHub.");
             setSubmitted(false);
             return;
           }
-    
+  
           setRepos(fetchedRepos);
           setUserInfo({
             name: user.name || user.login,
             bio: user.bio || "",
           });
-    
         } catch (err) {
           console.error("GitHub fetch error:", err);
           setError("Failed to load GitHub data.");
           setSubmitted(false);
+        } finally {
+          setLoading(false); // סיום טעינה – בכל מקרה
         }
       }
     };
-    
   
     fetchRepositories();
-  }, [submitted, username]);  
-
+  }, [submitted, username]);
+  
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // זיהוי המצב של המערכת והגדרת המצב הראשוני
@@ -161,15 +161,23 @@ export default function Home() {
         <section className="projects-section">
           <h2>Highlighted Projects</h2>
           <div className="projects-grid">
-          {repos.slice(0, visibleCount).map((repo: any) => (
-          <RepoCard
-            key={repo.id}
-            name={repo.name}
-            description={repo.description}
-            html_url={repo.html_url}
-            language={repo.language}
-          />
-         ))}
+          {loading ? (
+        <div className="spinner-container">
+          <div className="spinner" />
+          </div>
+        ) : error ? (
+          <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+        ) : (
+          repos.slice(0, visibleCount).map((repo: any) => (
+            <RepoCard
+              key={repo.id}
+              name={repo.name}
+              description={repo.description}
+              html_url={repo.html_url}
+              language={repo.language}
+            />
+          ))
+        )}
          </div>
            {visibleCount < repos.length && (
             <div className="show-more-container">
