@@ -80,14 +80,19 @@ export default function Home() {
         </button>
         <h1>Hello, I'm Hod Mitrany</h1>
         <p>{bio}</p>
-        <div className="profile-links">
+        {/* <div className="profile-links">
           <a href="https://www.linkedin.com/in/hod-mitrany" target="_blank"><FaLinkedin/>LinkedIn</a>
           <a href="https://github.com/hod25" target="_blank"><FaGithub /> GitHub</a>
           <a href="https://docs.google.com/document/d/1oCLnmsEQrpIXQk7-LObgFLzX1nPyVlUW/edit?usp=sharing&ouid=100594456677724045614&rtpof=true&sd=true" target="_blank"><FaFileAlt/>Resume (Docs)</a>
           <a href="/Hod_Mitrany_Resume.pdf" target="_blank"><FaFilePdf/>Resume (PDF)</a>
-          {/* <a href="/Hod_Mitrany_Resume.pdf" download>
+          <a href="/Hod_Mitrany_Resume.pdf" download>
             <FaDownload />
-          </a> */}
+          </a>
+        </div> */}
+        <div className="profile-links">
+          <a href="https://www.linkedin.com/in/hod-mitrany/" target="_blank"><FaLinkedin /> LinkedIn</a>
+          <a href="https://github.com/hod25" target="_blank"><FaGithub /> GitHub</a>
+          <ResumeDropdown />
         </div>
         <div className="try-button-container">
           <a href="/search" className="try-button">Try it yourself 🔍</a>
