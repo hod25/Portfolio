@@ -15,7 +15,6 @@ type ProjectCardProps = {
   link?: string;
 };
 
-
 export default function Home() {
   const username = "hod25"; 
   const [repos, setRepos] = useState<any[]>([]);
