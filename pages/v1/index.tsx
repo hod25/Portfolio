@@ -67,8 +67,15 @@ export default function Home() {
     <div>
       <Head>
       <link rel="icon" href="/Black Briefcase Icon.png" />
-        <title>Hod Mitrany - Portfolio</title>
-        <meta name="description" content="Portfolio of Hod Mitrany - Software Developer" />
+        <title>Hod Mitrany | GitHub Portfolio</title>
+        <meta name="description" content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח, GitHub Portfolio" />
+        <meta name="keywords" content="Hod Mitrany, הוד מיטרני, GitHub Portfolio, פורטפוליו, קוד פתוח, פיתוח תוכנה" />
+        <meta name="author" content="Hod Mitrany" />
+        <meta property="og:title" content="Hod Mitrany | GitHub Portfolio" />
+        <meta property="og:description" content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://portfolio.7112000.xyz" />
+        <meta property="og:image" content="https://portfolio.7112000.xyz/b.png" />
       </Head>
       <main className="container">
         {/* כפתור שינוי מצב כהה */}
