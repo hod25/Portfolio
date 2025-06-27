@@ -113,6 +113,7 @@ export default function Home() {
       <link rel="icon" href="/Black Briefcase Icon.png" />
         <title>Portfolio</title>
         <meta name="description" content="Portfolio from GitHub" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Head>
       <main className="container">
   <button
@@ -139,8 +140,11 @@ export default function Home() {
             placeholder="Enter GitHub username..."
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+            autoCapitalize="none"
+            autoCorrect="off"
           />
-          <button type="submit">Search</button>
+          <button type="submit">🔍 Search</button>
         </form>
         {error && (
         <p style={{ color: "red", textAlign: "center", marginTop: "1rem" }}>

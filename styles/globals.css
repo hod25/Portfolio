@@ -231,9 +231,10 @@ body.dark-mode .dark-mode-toggle:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 100px); /* שומר מקום ל-header/footer אם צריך */
-  padding: 2rem;
+  justify-content: flex-start;
+  min-height: calc(100vh - 80px);
+  padding: 2rem 2rem 1rem;
+  padding-top: 4rem;
   text-align: center;
 }
 
@@ -308,9 +309,9 @@ body.dark-mode .search-form button {
 
 .site-footer {
   text-align: center;
-  margin-top: 2rem;
-  padding: 1rem 0;
-  font-size: 0.9rem;
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
   color: #555;
 }
 
@@ -497,5 +498,234 @@ body.dark-mode .resume-menu a:hover {
     background-color: rgba(255, 255, 255, 0.6); /* רקע בהיר חצי שקוף */
     z-index: 1000;
   }
-  
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  /* Container adjustments for mobile */
+  .container,
+  .search-screen {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  /* Search screen mobile layout */
+  .search-screen {
+    min-height: calc(100vh - 60px);
+    justify-content: flex-start;
+    padding: 1rem;
+    padding-top: 2rem;
+  }
+
+  /* Title adjustments */
+  .search-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Search form mobile layout */
+  .search-form {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 280px;
+    align-items: center;
+  }
+
+  .search-form input {
+    width: 100%;
+    max-width: 250px;
+    padding: 0.8rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 6px;
+  }
+
+  .search-form button {
+    width: 100%;
+    max-width: 250px;
+    padding: 0.8rem;
+    font-size: 16px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  /* Projects grid mobile */
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Project cards mobile */
+  .project-card {
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Dark mode toggle mobile position */
+  .dark-mode-toggle {
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    font-size: 14px;
+    z-index: 1001;
+  }
+
+  /* Profile header mobile */
+  .profile-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-header h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-header p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  /* Profile links mobile */
+  .profile-links {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .profile-links a,
+  .profile-link {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Show more button mobile */
+  .show-more-button {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.8rem;
+  }
+
+  /* Footer mobile */
+  .site-footer {
+    font-size: 0.7rem;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+  }
+
+  /* Spinner mobile */
+  .spinner-container {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  body.dark-mode .spinner-container {
+    background-color: rgba(18, 18, 18, 0.8);
+  }
+}
+
+/* Tablet responsive styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .container,
+  .search-screen {
+    padding: 1.5rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .search-form {
+    gap: 0.8rem;
+  }
+
+  .search-form input {
+    width: 220px;
+  }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+  .search-screen {
+    padding: 0.8rem;
+    padding-top: 2rem;
+  }
+
+  .search-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-form input,
+  .search-form button {
+    max-width: 220px;
+  }
+
+  .dark-mode-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .project-card {
+    padding: 0.8rem;
+  }
+
+  .container {
+    padding: 0.8rem;
+  }
+}
+
+/* הוספת הגדרות נוספות לשיפור ממשק המשתמש במובייל */
+@media (max-width: 768px) {
+  /* מניעת גלילה אופקית */
+  * {
+    box-sizing: border-box;
+  }
+
+  /* שיפור נגישות של כפתורים במובייל */
+  button, 
+  .view-button,
+  .profile-link {
+    min-height: 44px; /* Apple's recommended touch target size */
+    touch-action: manipulation; /* מניעת עיכוב בלחיצה */
+  }
+
+  /* שיפור שדות קלט במובייל */
+  input[type="text"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* הוספת smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* מניעת zoom במובייל בשדות קלט */
+@media (max-width: 768px) {
+  input[type="text"] {
+    font-size: 16px !important;
+    transform: translateZ(0); /* מאיץ GPU */
+  }
+}
+
 
