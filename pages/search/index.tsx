@@ -108,14 +108,14 @@ export default function Home() {
   }, [darkMode]);
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Head>
       <link rel="icon" href="/Black Briefcase Icon.png" />
         <title>Portfolio</title>
         <meta name="description" content="Portfolio from GitHub" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Head>
-      <main className="container">
+      <main className={`container ${!submitted ? 'search-mode' : ''}`} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
   <button
     className="dark-mode-toggle"
     onClick={() => setDarkMode(!darkMode)}
@@ -124,7 +124,7 @@ export default function Home() {
   </button>
 
     {!submitted ? (
-      <div className="search-screen">
+      <div className="search-screen" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <h1 className="search-title">GitHub Portfolio Viewer</h1>
         <form
           onSubmit={(e) => {
