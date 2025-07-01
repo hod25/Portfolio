@@ -162,6 +162,24 @@ export default function Home() {
           </div>
         )}
 
+        {submitted && (
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
+            <button
+              className="search-again-button"
+              onClick={() => {
+                setSubmitted(false);
+                setUsername('');
+                setRepos([]);
+                setUserInfo(null);
+                setError(null);
+                setVisibleCount(4);
+              }}
+            >
+              🔍 Search Again
+            </button>
+          </div>
+        )}
+
         <section className="projects-section">
           <h2>Highlighted Projects</h2>
           <div className="projects-grid">
