@@ -767,4 +767,14 @@ html {
   padding: 1rem 2rem;
 }
 
+/* Hide broken images completely */
+img[src=""], img:not([src]) {
+  display: none !important;
+}
+
+/* Hide images that failed to load */
+img[style*="display: none"] {
+  display: none !important;
+}
+
 
