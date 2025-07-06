@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { marked } from "marked";
 
 type ReadmeViewerProps = {
@@ -11,6 +11,73 @@ export default function ReadmeViewer({ repoUrl }: ReadmeViewerProps) {
   const [content, setContent] = useState<string>("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // פונקציה לטיפול בתמונות שלא נטענות
+  const handleImageError = (img: HTMLImageElement) => {
+    // פשוט הסתר את התמונה
+    img.style.display = 'none';
+  };
+
+  // פונקציה לעדכון מקורות התמונות וטיפול בשגיאות
+  const processImages = () => {
+    if (!contentRef.current) return;
+    
+    const images = contentRef.current.querySelectorAll('img');
+    const cleanedUrl = repoUrl
+      .replace("https://github.com/", "")
+      .replace(/\/(tree|blob)\/[^\/]+/, "");
+    
+    images.forEach((img) => {
+      // בדוק אם התמונה כבר עובדת
+      if (img.complete && img.naturalWidth > 0) {
+        return; // התמונה כבר נטענה בהצלחה
+      }
+      
+      // בדוק אם התמונה כבר מוסתרת
+      if (img.style.display === 'none') {
+        return; // התמונה כבר מטופלת
+      }
+      
+      const originalSrc = img.getAttribute('src');
+      if (!originalSrc) {
+        handleImageError(img);
+        return;
+      }
+      
+      // אם זה קישור יחסי, נמיר אותו לקישור מלא של GitHub
+      if (!originalSrc.startsWith('http')) {
+        // נסה עם main branch
+        img.src = `https://raw.githubusercontent.com/${cleanedUrl}/main/${originalSrc}`;
+      }
+      
+      // הסר מאזינים קיימים כדי למנוע כפילויות
+      const existingHandler = (img as any)._errorHandler;
+      if (existingHandler) {
+        img.removeEventListener('error', existingHandler);
+      }
+      
+      // צור מאזין חדש
+      const errorHandler = () => {
+        // אם נכשל עם main, נסה עם master
+        if (img.src.includes('/main/')) {
+          img.src = img.src.replace('/main/', '/master/');
+        } else {
+          // אם גם master נכשל, הסתר את התמונה
+          handleImageError(img);
+        }
+      };
+      
+      // שמור את המאזין על התמונה כדי שנוכל להסיר אותו מאוחר יותר
+      (img as any)._errorHandler = errorHandler;
+      img.addEventListener('error', errorHandler, { once: true });
+      
+      // בדוק אם התמונה כבר נכשלה בטעינה
+      if (img.complete && img.naturalWidth === 0) {
+        handleImageError(img);
+      }
+    });
+  };
 
   useEffect(() => {
     async function fetchReadme() {
@@ -66,10 +133,41 @@ export default function ReadmeViewer({ repoUrl }: ReadmeViewerProps) {
     fetchReadme();
   }, [repoUrl]);
 
+  // הוסף effect לטיפול בתמונות לאחר עדכון התוכן
+  useEffect(() => {
+    if (content) {
+      // השהיה קטנה כדי לוודא שה-DOM עודכן
+      const timer = setTimeout(processImages, 100);
+      
+      // גם אחרי זמן ארוך יותר למקרה של תמונות שטוענות לאט
+      const delayedTimer = setTimeout(processImages, 2000);
+      
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(delayedTimer);
+      };
+    }
+  }, [content]);
+
+  // הוסף effect נוסף שירוץ כל פעם שהקומפוננטה מתעדכנת
+  useEffect(() => {
+    if (content) {
+      const handleImages = () => {
+        processImages();
+      };
+      
+      // הוסף מאזין לאירועי load/error של כל התמונות
+      const timer = setTimeout(handleImages, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  });
+
   if (loading || error || !content) return null; 
 
   return (
     <div
+      ref={contentRef}
       className="prose mx-auto p-4 bg-white rounded shadow max-w-2xl"
       dangerouslySetInnerHTML={{ __html: content }}
     />
