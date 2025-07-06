@@ -6,10 +6,35 @@ export async function fetchRepos(username: string) {
 
   const repos = await res.json();
 
+  // פונקציה לבדיקה אם README מכיל תוכן משמעותי
+  const hasSignificantContent = (content: string): boolean => {
+    if (!content || content.trim().length === 0) return false;
+    
+    const lines = content.split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0);
+    
+    // בדוק שיש לפחות 3 שורות לא ריקות
+    if (lines.length < 3) return false;
+    
+    // ספור שורות שהן לא רק כותרות (לא מתחילות ב-#)
+    const nonHeaderLines = lines.filter(line => !line.startsWith('#'));
+    
+    // וודא שיש לפחות 2 שורות שאינן כותרות
+    if (nonHeaderLines.length < 2) return false;
+    
+    // ספור כמה מילים יש בשורות שאינן כותרות
+    const wordCount = nonHeaderLines.join(' ').split(/\s+/).filter(word => word.length > 0).length;
+    
+    // וודא שיש לפחות 10 מילים של תוכן אמיתי
+    return wordCount >= 10;
+  };
+
   const updatedRepos = await Promise.all(
     repos.map(async (repo: any) => {
       const branches = ['main', 'master'];
       let readmeContent = '';
+      let hasGoodReadme = false;
 
       for (const branch of branches) {
         const readmeUrl = `https://raw.githubusercontent.com/${username}/${repo.name}/${branch}/README.md`;
@@ -17,39 +42,28 @@ export async function fetchRepos(username: string) {
 
         if (response.ok) {
           const content = await response.text();
-          const lines = content.split('\n').filter(line => line.trim() !== '');
-          if (lines.length >= 2) {
-            readmeContent = content;  // שמירה של תוכן ה-README אם יש לפחות 2 שורות
-            break; // אם מצאנו README עם תוכן מתאים, יצאנו מהלולאה
+          if (hasSignificantContent(content)) {
+            readmeContent = content;
+            hasGoodReadme = true;
+            break;
           }
         }
       }
 
       return { 
         ...repo, 
-        readme: readmeContent,  // אם אין תוכן ה-README, הוא יישאר ריק
+        readme: readmeContent,
+        hasGoodReadme
       };
     })
   );
 
-  // סינון הריפויים עם README טוב
-  const filteredRepos = updatedRepos.filter((repo) => repo.readme && repo.readme.trim().length >= 2);
+  // החזר רק ריפוזיטוריים עם README איכותי
+  const filteredRepos = updatedRepos
+    .filter(repo => repo.hasGoodReadme)
+    .slice(0, 8); // הגבל ל-8 ריפוזיטוריים טובים
 
-  // אם יש יותר מ-8 ריפויים טובים, החזר את ה-8 הטובים בלבד
-  if (filteredRepos.length >= 8) {
-    return filteredRepos.slice(0, 8);
-  }
-
-  // אם יש פחות מ-8 ריפויים טובים, הוסף ריפויים נוספים (ללא README תקין) עד למלא את ה-8
-  const remainingReposNeeded = 8 - filteredRepos.length;
-
-  // מסנן את הריפויים שה-README שלהם לא תקין
-  const remainingRepos = updatedRepos
-    .filter((repo) => !repo.readme || repo.readme.trim().length < 2)
-    .slice(0, remainingReposNeeded);
-
-  // מחזיר את הריפויים התקינים ואז את הריפויים הנותרים (בלי להציג את ה-README שלהם)
-  return [...filteredRepos, ...remainingRepos];
+  return filteredRepos;
 }
 
 export async function fetchUser(username: string) {
