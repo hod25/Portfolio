@@ -7,9 +7,10 @@ type RepoCardProps = {
   description: string;
   html_url: string;
   language: string | null;
+  viewMode?: 'grid' | 'two-per-row' | 'one-per-row';
 };
 
-export default function RepoCard({ name, description, html_url, language }: RepoCardProps) {
+export default function RepoCard({ name, description, html_url, language, viewMode = 'grid' }: RepoCardProps) {
   return (
     <div className="project-card">
       {/* <h3 className="text-xl font-bold mb-2">{name}</h3> */}
