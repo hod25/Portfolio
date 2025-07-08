@@ -47,6 +47,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(4);
   const [loading, setLoading] = useState<boolean>(true);
+  const [viewMode, setViewMode] = useState<'grid' | 'two-per-row' | 'one-per-row'>('grid');
 
   useEffect(() => {
     const fetchRepositories = async () => {
@@ -181,8 +182,33 @@ export default function Home() {
         )}
 
         <section className="projects-section">
-          <h2>Highlighted Projects</h2>
-          <div className="projects-grid">
+          <div className="projects-header">
+            <h2>Highlighted Projects</h2>
+            <div className="view-controls">
+              <button
+                className={`view-button ${viewMode === 'grid' ? 'active' : ''}`}
+                onClick={() => setViewMode('grid')}
+                title="Grid View"
+              >
+                ⊞
+              </button>
+              <button
+                className={`view-button ${viewMode === 'two-per-row' ? 'active' : ''}`}
+                onClick={() => setViewMode('two-per-row')}
+                title="Two Per Row"
+              >
+                ⚏
+              </button>
+              <button
+                className={`view-button ${viewMode === 'one-per-row' ? 'active' : ''}`}
+                onClick={() => setViewMode('one-per-row')}
+                title="One Per Row"
+              >
+                ▬
+              </button>
+            </div>
+          </div>
+          <div className={`projects-container ${viewMode}-view`}>
           {loading ? (
         <div className="spinner-container">
           <div className="spinner" />
@@ -197,6 +223,7 @@ export default function Home() {
               description={repo.description}
               html_url={repo.html_url}
               language={repo.language}
+              viewMode={viewMode}
             />
           ))
         )}

@@ -26,6 +26,7 @@ export default function ReadmeViewer({ repoUrl }: ReadmeViewerProps) {
     const images = contentRef.current.querySelectorAll('img');
     const cleanedUrl = repoUrl
       .replace("https://github.com/", "")
+    
       .replace(/\/(tree|blob)\/[^\/]+/, "");
     
     images.forEach((img) => {
