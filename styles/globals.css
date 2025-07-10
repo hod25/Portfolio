@@ -845,9 +845,9 @@ body.dark-mode .view-controls .view-button.active {
 
 .projects-container.one-per-row-view {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
   grid-template-columns: 1fr;
-  max-width: 800px; /* הגבל את הרוחב המקסימלי */
+  max-width: 1000px; /* הגדל את הרוחב המקסימלי */
   margin: 0 auto; /* מרכז את הקונטיינר */
 }
 
@@ -858,16 +858,17 @@ body.dark-mode .view-controls .view-button.active {
 /* ReadmeViewer adjustments for one-per-row view */
 .projects-container.one-per-row-view .prose {
   max-width: 100% !important;
-  padding: 1rem !important;
-  font-size: 0.9rem;
+  padding: 1.5rem !important;
+  font-size: 1rem; /* הגדל את גודל הטקסט */
 }
 
 .projects-container.one-per-row-view .project-card {
-  padding: 1rem;
+  padding: 1.5rem; /* הגדל את הריפוד */
+  min-height: 300px; /* הוסף גובה מינימלי */
 }
 
 .projects-container.one-per-row-view .project-card .mt-4 {
-  max-height: 150px;
+  max-height: 200px; /* הגדל את הגובה המקסימלי */
   overflow: hidden;
   position: relative;
 }
