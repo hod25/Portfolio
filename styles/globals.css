@@ -834,20 +834,22 @@ body.dark-mode .view-controls .view-button.active {
 .projects-container.grid-view {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* רוחב קבוע יותר גדול */
 }
 
 .projects-container.two-per-row-view {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(2, 1fr);
+  max-width: 800px; /* הגבלת רוחב כדי שהכרטיסים לא יהיו רחבים מדי */
+  margin: 0 auto;
 }
 
 .projects-container.one-per-row-view {
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
-  max-width: 800px; /* הגבל את הרוחב המקסימלי */
+  max-width: 400px; /* רוחב קבוע לכרטיס יחיד */
   margin: 0 auto; /* מרכז את הקונטיינר */
 }
 
@@ -855,37 +857,7 @@ body.dark-mode .view-controls .view-button.active {
   max-width: 100%;
 }
 
-/* ReadmeViewer adjustments for one-per-row view */
-.projects-container.one-per-row-view .prose {
-  max-width: 100% !important;
-  padding: 1rem !important;
-  font-size: 0.9rem;
-}
-
-.projects-container.one-per-row-view .project-card {
-  padding: 1rem;
-}
-
-.projects-container.one-per-row-view .project-card .mt-4 {
-  max-height: 150px;
-  overflow: hidden;
-  position: relative;
-}
-
-.projects-container.one-per-row-view .project-card .mt-4::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30px;
-  background: linear-gradient(transparent, white);
-  pointer-events: none;
-}
-
-body.dark-mode .projects-container.one-per-row-view .project-card .mt-4::after {
-  background: linear-gradient(transparent, #2c2c2c);
-}
+/* כל מצבי התצוגה יראו זהה - ללא התאמות מיוחדות */
 
 /* Mobile responsive for view modes */
 @media (max-width: 768px) {
