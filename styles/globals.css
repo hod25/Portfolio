@@ -989,8 +989,8 @@ body.dark-mode .view-controls .view-button.active {
 .projects-container.one-per-row-view {
   display: grid;
   gap: 1rem;
-  grid-template-columns: minmax(250px, 250px);
-  max-width: 250px;
+  grid-template-columns: minmax(250px, 1fr);
+  max-width: 350px;
   margin: 0 auto;
 }
 
@@ -1001,16 +1001,16 @@ body.dark-mode .view-controls .view-button.active {
 /* ReadmeViewer adjustments for one-per-row view */
 .projects-container.one-per-row-view .prose {
   max-width: 100% !important;
-  padding: 0.8rem !important;
-  font-size: 0.85rem;
+  padding: 1rem !important;
+  font-size: 0.9rem;
 }
 
 .projects-container.one-per-row-view .project-card {
-  padding: 0.8rem;
+  padding: 1rem;
 }
 
 .projects-container.one-per-row-view .project-card .mt-4 {
-  max-height: 120px;
+  max-height: 150px;
   overflow: hidden;
   position: relative;
 }
@@ -1021,7 +1021,7 @@ body.dark-mode .view-controls .view-button.active {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 25px;
+  height: 30px;
   background: linear-gradient(transparent, white);
   pointer-events: none;
 }
