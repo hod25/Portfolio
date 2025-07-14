@@ -882,8 +882,6 @@ body.dark-mode .view-controls .view-button.active {
   max-width: 100%;
 }
 
-/* כל מצבי התצוגה יראו זהה - ללא התאמות מיוחדות */
-
 /* Mobile responsive for view modes */
 @media (max-width: 768px) {
   .projects-header {
