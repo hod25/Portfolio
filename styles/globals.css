@@ -891,7 +891,7 @@ body.dark-mode .view-controls .view-button.active {
   }
   
   .view-controls {
-    justify-content: center;
+    display: none;
   }
   
   .projects-container.two-per-row-view,
