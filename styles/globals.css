@@ -651,17 +651,28 @@ body.dark-mode .resume-menu a:hover {
 
   /* Profile links mobile */
   .profile-links {
-    flex-direction: column;
-    gap: 0.8rem;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
     align-items: center;
   }
 
+  .profile-links a .link-text {
+    display: none;
+  }
+  
   .profile-links a,
   .profile-link {
-    width: 100%;
-    max-width: 200px;
-    text-align: center;
+    min-width: 50px;
+    height: 50px;
+    border-radius: 50%;
     justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-size: 1.3rem;
+    width: auto;
+    max-width: none;
+    text-align: center;
   }
 
   /* Show more button mobile */
@@ -891,7 +902,7 @@ body.dark-mode .view-controls .view-button.active {
   }
   
   .view-controls {
-    justify-content: center;
+    display: none;
   }
   
   .projects-container.two-per-row-view,
@@ -962,5 +973,3 @@ body.dark-mode .projects-container.one-per-row-view .project-card .mt-4::after {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
-
