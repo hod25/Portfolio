@@ -97,8 +97,8 @@ export default function Home() {
           </a>
         </div> */}
         <div className="profile-links">
-          <a href="https://www.linkedin.com/in/hod-mitrany/" target="_blank"><FaLinkedin /> LinkedIn</a>
-          <a href="https://github.com/hod25" target="_blank"><FaGithub /> GitHub</a>
+          <a href="https://www.linkedin.com/in/hod-mitrany/" target="_blank"><FaLinkedin /> <span className="link-text">LinkedIn</span></a>
+          <a href="https://github.com/hod25" target="_blank"><FaGithub /> <span className="link-text">GitHub</span></a>
           <ResumeDropdown />
         </div>
         <div className="try-button-container">
