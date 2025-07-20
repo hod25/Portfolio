@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaFileAlt } from 'react-icons/fa';
 
 export default function ResumeDropdown() {
   const [open, setOpen] = useState(false);
@@ -20,7 +20,7 @@ export default function ResumeDropdown() {
   return (
     <div className="resume-dropdown" ref={ref}>
       <a onClick={() => setOpen(!open)} className="profile-link">
-        <FaUser /> <span className="link-text">CV</span>
+        <FaFileAlt /> <span className="link-text">CV</span>
       </a>
       {open && (
         <div className="resume-menu">
