@@ -20,7 +20,7 @@ export default function ResumeDropdown() {
   return (
     <div className="resume-dropdown" ref={ref}>
       <a onClick={() => setOpen(!open)} className="profile-link">
-        <FaFileAlt /> <span className="link-text">CV</span>
+        <FaFileAlt /> <span className="link-text">Resume</span>
       </a>
       {open && (
         <div className="resume-menu">
