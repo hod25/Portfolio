@@ -651,7 +651,7 @@ body.dark-mode .resume-menu a:hover {
     line-height: 1.4;
   }
 
-  /* Profile links mobile */
+  /* Profile links mobile - HIDE ALL TEXT */
   .profile-links {
     flex-direction: row;
     gap: 1rem;
@@ -659,22 +659,60 @@ body.dark-mode .resume-menu a:hover {
     align-items: center;
   }
 
-  .profile-links a .link-text {
-    display: none;
+  /* Hide all spans with link-text class - SUPER SPECIFIC */
+  .profile-links span.link-text,
+  .profile-links .link-text,
+  span.link-text,
+  .link-text {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    font-size: 0 !important;
+    overflow: hidden !important;
   }
   
+  /* Make all profile links circular and icon-only */
   .profile-links a,
-  .profile-link {
-    min-width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    font-size: 1.3rem;
-    width: auto;
-    max-width: none;
-    text-align: center;
+  .profile-links .profile-link,
+  .profile-links .resume-dropdown .profile-link {
+    min-width: 50px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    font-size: 1.3rem !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    max-width: 50px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-indent: -9999px !important;
+  }
+
+  /* Show only icons */
+  .profile-links a svg,
+  .profile-links .profile-link svg,
+  .profile-links .resume-dropdown .profile-link svg {
+    position: relative !important;
+    text-indent: 0 !important;
+    display: inline-block !important;
+    z-index: 1 !important;
+  }
+
+  /* Resume dropdown specific styling */
+  .resume-dropdown {
+    display: inline-block;
+  }
+
+  /* Resume menu mobile positioning */
+  .resume-menu {
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 140px;
   }
 
   /* Show more button mobile */
