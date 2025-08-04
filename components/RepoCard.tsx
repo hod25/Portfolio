@@ -24,7 +24,7 @@ export default function RepoCard({ name, description, html_url, language, viewMo
       {/* <p className="text-sm text-blue-500">{language}</p> */}
       <a
         href={html_url}
-        className="view-button"
+        className="view-button flex items-center justify-center text-center"
         target="_blank"
         rel="noopener noreferrer"
       >
