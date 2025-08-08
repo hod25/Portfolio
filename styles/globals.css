@@ -19,8 +19,10 @@ body.dark-mode {
 }
 
 main {
-  min-height: 100vh;
+  min-height: calc(100vh - 60px); /* מקום ל-footer */
   background-color: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
 /* קונטיינר ראשי */
@@ -563,10 +565,18 @@ body.dark-mode .resume-menu a:hover {
 
   /* Search screen mobile layout */
   .search-screen {
-    min-height: calc(100vh - 60px);
-    justify-content: flex-start;
+    min-height: auto !important;
+    justify-content: flex-start !important;
     padding: 1rem;
-    padding-top: 2rem;
+    padding-top: 1rem;
+  }
+
+  /* במצב חיפוש, מניעת מיקום מרכזי במובייל */
+  .search-mode .search-screen {
+    justify-content: flex-start !important;
+    min-height: auto !important;
+    padding: 1rem;
+    padding-top: 1rem;
   }
 
   /* Title adjustments */
@@ -767,7 +777,15 @@ body.dark-mode .resume-menu a:hover {
 @media (max-width: 480px) {
   .search-screen {
     padding: 0.8rem;
-    padding-top: 2rem;
+    padding-top: 1rem !important;
+    min-height: auto !important;
+    justify-content: flex-start !important;
+  }
+
+  .search-mode .search-screen {
+    padding: 0.8rem;
+    padding-top: 1rem !important;
+    justify-content: flex-start !important;
   }
 
   .search-title {
@@ -850,10 +868,10 @@ html {
 }
 
 .search-mode .search-screen {
-  flex: 1;
+  flex: none;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: auto;
   padding: 1rem 2rem;
 }
