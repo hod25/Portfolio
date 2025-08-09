@@ -125,7 +125,7 @@ export default function Home() {
   </button>
 
     {!submitted ? (
-      <div className="search-screen" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div className="search-screen" style={{ flex: 'none', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
         <h1 className="search-title">GitHub Portfolio Viewer</h1>
         <form
           onSubmit={(e) => {
