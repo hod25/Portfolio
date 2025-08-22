@@ -433,6 +433,14 @@ body.dark-mode .site-footer {
   border-radius: 8px;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-links a svg {
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .profile-links a:hover {
@@ -493,6 +501,11 @@ body.dark-mode .site-footer {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.profile-link svg {
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .profile-link:hover {
@@ -556,6 +569,11 @@ body.dark-mode .resume-menu a:hover {
 
 /* Mobile responsive styles */
 @media (max-width: 768px) {
+  /* Override any global styles that might hide icons */
+  svg {
+    display: inline-block !important;
+  }
+  
   /* Container adjustments for mobile */
   .container,
   .search-screen {
@@ -673,18 +691,12 @@ body.dark-mode .resume-menu a:hover {
     align-items: center;
   }
 
-  /* Hide all spans with link-text class - SUPER SPECIFIC */
+  /* Hide text elements on mobile - only show icons */
   .profile-links span.link-text,
   .profile-links .link-text,
   span.link-text,
   .link-text {
     display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
-    font-size: 0 !important;
-    overflow: hidden !important;
   }
   
   /* Make all profile links circular and icon-only */
@@ -702,19 +714,54 @@ body.dark-mode .resume-menu a:hover {
     text-align: center !important;
     display: inline-flex !important;
     max-width: 50px !important;
-    overflow: hidden !important;
-    white-space: nowrap !important;
-    text-indent: -9999px !important;
+    position: relative !important;
   }
 
-  /* Show only icons */
+  /* Show only icons and hide text */
+  .profile-links a .link-text,
+  .profile-links .profile-link .link-text {
+    display: none !important;
+  }
+
+  /* Ensure icons are visible */
   .profile-links a svg,
   .profile-links .profile-link svg,
   .profile-links .resume-dropdown .profile-link svg {
-    position: relative !important;
-    text-indent: 0 !important;
     display: inline-block !important;
+    font-size: 1.3rem !important;
     z-index: 1 !important;
+    color: inherit !important;
+    width: 1.3rem !important;
+    height: 1.3rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Specific targeting for React Icons */
+  .profile-links [data-icon],
+  .profile-links svg[data-icon],
+  .profile-links .profile-link [data-icon],
+  .profile-links .profile-link svg[data-icon] {
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Fix any potential icon hiding issues */
+  .profile-links a *:not(.link-text),
+  .profile-links .profile-link *:not(.link-text),
+  .profile-links .resume-dropdown .profile-link *:not(.link-text) {
+    color: inherit !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Ensure icons show up in dark mode too */
+  body.dark-mode .profile-links a svg,
+  body.dark-mode .profile-links .profile-link svg,
+  body.dark-mode .profile-links .resume-dropdown .profile-link svg {
+    color: inherit !important;
   }
 
   /* Resume dropdown specific styling */
