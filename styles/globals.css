@@ -698,6 +698,11 @@ body.dark-mode .resume-menu a:hover {
   .link-text {
     display: none !important;
   }
+
+  /* Hide resume dropdown menu on mobile */
+  .resume-menu {
+    display: none !important;
+  }
   
   /* Make all profile links circular and icon-only */
   .profile-links a,
@@ -710,11 +715,23 @@ body.dark-mode .resume-menu a:hover {
     justify-content: center !important;
     align-items: center !important;
     padding: 0 !important;
-    font-size: 1.3rem !important;
+    font-size: 1.2rem !important;
     text-align: center !important;
     display: inline-flex !important;
     max-width: 50px !important;
     position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Completely hide any text content */
+  .profile-links a span,
+  .profile-links .profile-link span,
+  .profile-links .resume-dropdown span {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   /* Show only icons and hide text */
@@ -723,18 +740,19 @@ body.dark-mode .resume-menu a:hover {
     display: none !important;
   }
 
-  /* Ensure icons are visible */
+  /* Ensure icons are visible and properly sized */
   .profile-links a svg,
   .profile-links .profile-link svg,
   .profile-links .resume-dropdown .profile-link svg {
     display: inline-block !important;
-    font-size: 1.3rem !important;
+    font-size: 1.2rem !important;
     z-index: 1 !important;
     color: inherit !important;
-    width: 1.3rem !important;
-    height: 1.3rem !important;
+    width: 1.2rem !important;
+    height: 1.2rem !important;
     opacity: 1 !important;
     visibility: visible !important;
+    margin: 0 !important;
   }
 
   /* Specific targeting for React Icons */
