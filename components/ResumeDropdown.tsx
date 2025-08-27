@@ -4,7 +4,19 @@ import { FaFileAlt } from 'react-icons/fa';
 
 export default function ResumeDropdown() {
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  // זיהוי מובייל
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   // סגירה אוטומטית אם לוחצים מחוץ לרכיב
   useEffect(() => {
@@ -17,12 +29,28 @@ export default function ResumeDropdown() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // במובייל - הורדה ישירה, בדסקטופ - תפריט
+  const handleClick = () => {
+    if (isMobile) {
+      // הורדה ישירה במובייל
+      const link = document.createElement('a');
+      link.href = '/Hod_Mitrany_Resume.pdf';
+      link.download = 'Hod_Mitrany_Resume.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      // תפריט בדסקטופ
+      setOpen(!open);
+    }
+  };
+
   return (
     <div className="resume-dropdown" ref={ref}>
-      <a onClick={() => setOpen(!open)} className="profile-link">
+      <a onClick={handleClick} className="profile-link">
         <FaFileAlt /> <span className="link-text">Resume</span>
       </a>
-      {open && (
+      {!isMobile && open && (
         <div className="resume-menu">
           <a href="/Hod_Mitrany_Resume.pdf" download>Download PDF</a>
           <a href="/Hod_Mitrany_Resume.pdf" target="_blank">View PDF</a>
