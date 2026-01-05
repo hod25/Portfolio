@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "marked": "^15.0.11",
-        "next": "latest",
+        "next": "^15.3.2",
         "react": "^19.1.0",
         "react-dom": "latest",
         "react-icons": "^5.5.0"
