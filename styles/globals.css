@@ -365,13 +365,46 @@ body.dark-mode .search-again-button:hover {
 .site-footer {
   text-align: center;
   margin-top: 1rem;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   font-size: 0.8rem;
   color: #555;
 }
 
+.site-footer .footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.site-footer .footer-content p {
+  text-align: center;
+  margin: 0;
+}
+
+.site-footer .netlify-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.site-footer a {
+  color: #0070f3;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.site-footer a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
 body.dark-mode .site-footer {
   color: #aaa;
+}
+
+body.dark-mode .site-footer a {
+  color: #58a6ff;
 }
 
 /* עטיפת כל הדף */

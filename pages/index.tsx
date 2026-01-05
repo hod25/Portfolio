@@ -152,7 +152,19 @@ export default function Home() {
       </section>
           </main>
       <footer className="site-footer">
-        © {new Date().getFullYear()} Built by Hod Mitrany
+        <div className="footer-content">
+          <p>© {new Date().getFullYear()} Built by Hod Mitrany</p>
+          {!darkMode && (
+            <a href="https://www.netlify.com" className="netlify-badge">
+              <img src="https://www.netlify.com/assets/badges/netlify-badge-light.svg" alt="Deploys by Netlify" />
+            </a>
+          )}
+          {darkMode && (
+            <a href="https://www.netlify.com" className="netlify-badge">
+              <img src="https://www.netlify.com/assets/badges/netlify-badge-dark.svg" alt="Deploys by Netlify" />
+            </a>
+          )}
+        </div>
       </footer>
     </div>
   );  
