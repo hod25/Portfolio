@@ -8,7 +8,7 @@ export default function Download() {
   useEffect(() => {
     // יוצר הורדה מיידית של הקובץ
     const link = document.createElement('a');
-    link.href = '/Hod_Mitrany_Resume.pdf';
+    link.href = '/api/resume?download=1';
     link.download = 'Hod_Mitrany_Resume.pdf';
     document.body.appendChild(link);
     link.click();

@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from 'react';
 import { FaFileAlt } from 'react-icons/fa';
 
 export default function ResumeDropdown() {
+  const resumeViewUrl = "/api/resume";
+  const resumeDownloadUrl = "/api/resume?download=1";
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -34,7 +36,7 @@ export default function ResumeDropdown() {
     if (isMobile) {
       // הורדה ישירה במובייל
       const link = document.createElement('a');
-      link.href = '/Hod_Mitrany_Resume.pdf';
+      link.href = resumeDownloadUrl;
       link.download = 'Hod_Mitrany_Resume.pdf';
       document.body.appendChild(link);
       link.click();
@@ -52,8 +54,8 @@ export default function ResumeDropdown() {
       </a>
       {!isMobile && open && (
         <div className="resume-menu">
-          <a href="/Hod_Mitrany_Resume.pdf" download>Download PDF</a>
-          <a href="/Hod_Mitrany_Resume.pdf" target="_blank">View PDF</a>
+          <a href={resumeDownloadUrl} download>Download PDF</a>
+          <a href={resumeViewUrl} target="_blank">View PDF</a>
           <a
             href="https://docs.google.com/document/d/1oCLnmsEQrpIXQk7-LObgFLzX1nPyVlUW/edit?usp=sharing"
             target="_blank"
