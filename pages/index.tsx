@@ -1,171 +1,205 @@
-"use client";;
-
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
-import ReadmeViewer from '../components/ReadmeViewer'; 
-import { FaLinkedin, FaGithub, FaFilePdf, FaFileAlt } from 'react-icons/fa';
+import type { GetStaticProps } from "next";
+import Head from "next/head";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import RepoCard from "../components/RepoCard";
-import { fetchRepos, fetchUser } from "../lib/github_hod";
-import { FaDownload } from 'react-icons/fa';
-import ResumeDropdown from '../components/ResumeDropdown';
+import ResumeDropdown from "../components/ResumeDropdown";
+import { useTheme } from "../components/ThemeContext";
+import ViewControls, { ViewMode } from "../components/ViewControls";
+import { fetchPortfolioData, GitHubRepo, PortfolioData } from "../lib/github";
 
-type ProjectCardProps = {
-  title: string;
-  description: string;
-  link?: string;
+const DEFAULT_USERNAME = "hod25";
+
+interface HomeProps {
+  initialRepos: GitHubRepo[];
+  initialBio: string;
+}
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const data = await fetchPortfolioData(DEFAULT_USERNAME);
+
+  return {
+    props: {
+      initialRepos: data.repos,
+      initialBio: data.user?.bio ?? "",
+    },
+    revalidate: 3600,
+  };
 };
 
-export default function Home() {
-  const username = "hod25"; 
-  const [repos, setRepos] = useState<any[]>([]);
-  const [bio, setBio] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [viewMode, setViewMode] = useState<'grid' | 'two-per-row' | 'one-per-row'>('grid');
+export default function Home({ initialRepos, initialBio }: HomeProps) {
+  const { darkMode, toggleDarkMode } = useTheme();
+  const [repos, setRepos] = useState<GitHubRepo[]>(initialRepos);
+  const [bio, setBio] = useState<string>(initialBio);
+  const [loading, setLoading] = useState<boolean>(initialRepos.length === 0);
+  const [error, setError] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
+  // Fallback client fetch only if build-time ISR returned no repos (e.g. offline build)
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // התחלת טעינה
-      const [fetchedRepos, userData] = await Promise.all([
-        fetchRepos(username),
-        fetchUser(username),
-      ]);
-      setRepos(fetchedRepos);
-      setBio(userData.bio);
-      setLoading(false); // סיום טעינה
+    if (initialRepos.length > 0) return;
+
+    let cancelled = false;
+
+    const loadFallback = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(
+          `/api/github?username=${encodeURIComponent(DEFAULT_USERNAME)}`
+        );
+        const data: PortfolioData = await res.json();
+        if (cancelled) return;
+
+        if (!res.ok || data.error) {
+          setError(data.error || "Failed to load projects from GitHub.");
+          return;
+        }
+
+        setRepos(data.repos);
+        setBio(data.user?.bio ?? "");
+      } catch {
+        if (!cancelled) {
+          setError("Failed to load projects from GitHub.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
     };
-  
-    fetchData();
-  }, []);  
-  
-  const [darkMode, setDarkMode] = useState<boolean>(false);
 
-  // זיהוי המצב של המערכת והגדרת המצב הראשוני
-  useEffect(() => {
-    // אם יש כבר הגדרה מקומית שמורה
-    const savedMode = localStorage.getItem('darkMode');
-    if (savedMode) {
-      setDarkMode(savedMode === 'true');
-    } else {
-      // אם אין הגדרה מקומית, נגלה לפי הגדרת המערכת
-      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setDarkMode(prefersDarkMode);
-    }
-  }, []);
-
-  // עדכון ה-class של ה-body לפי מצב המצב כהה
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-    // שמירה על המצב של המצב כהה
-    localStorage.setItem('darkMode', darkMode.toString());
-  }, [darkMode]);
+    loadFallback();
+    return () => {
+      cancelled = true;
+    };
+  }, [initialRepos.length]);
 
   return (
-    <div>
+    <div className="page-wrapper">
       <Head>
-      <link rel="icon" href="/Black Briefcase Icon.png" />
+        <link rel="icon" href="/Black Briefcase Icon.png" />
         <title>Hod Mitrany | GitHub Portfolio</title>
-        <meta name="description" content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח, GitHub Portfolio" />
-        <meta name="keywords" content="Hod Mitrany, הוד מיטרני, GitHub Portfolio, פורטפוליו, קוד פתוח, פיתוח תוכנה" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח, GitHub Portfolio"
+        />
+        <meta
+          name="keywords"
+          content="Hod Mitrany, הוד מיטרני, GitHub Portfolio, פורטפוליו, קוד פתוח, פיתוח תוכנה"
+        />
         <meta name="author" content="Hod Mitrany" />
         <meta property="og:title" content="Hod Mitrany | GitHub Portfolio" />
-        <meta property="og:description" content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח" />
+        <meta
+          property="og:description"
+          content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://portfolio.7112000.xyz" />
         <meta property="og:image" content="https://portfolio.7112000.xyz/b.png" />
       </Head>
+
       <main className="container">
-        {/* כפתור שינוי מצב כהה */}
         <button
+          type="button"
           className="dark-mode-toggle"
-          onClick={() => setDarkMode(!darkMode)}
+          onClick={toggleDarkMode}
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
         >
-        {darkMode ? 'Light Mode' : 'Dark Mode'}
+          {darkMode ? "Light Mode" : "Dark Mode"}
         </button>
-        <h1>Hello, I'm Hod Mitrany</h1>
-        <p>{bio}</p>
-        {/* <div className="profile-links">
-          <a href="https://www.linkedin.com/in/hod-mitrany" target="_blank"><FaLinkedin/>LinkedIn</a>
-          <a href="https://github.com/hod25" target="_blank"><FaGithub /> GitHub</a>
-          <a href="https://docs.google.com/document/d/1oCLnmsEQrpIXQk7-LObgFLzX1nPyVlUW/edit?usp=sharing&ouid=100594456677724045614&rtpof=true&sd=true" target="_blank"><FaFileAlt/>Resume (Docs)</a>
-          <a href="/Hod_Mitrany_Resume.pdf" target="_blank"><FaFilePdf/>Resume (PDF)</a>
-          <a href="/Hod_Mitrany_Resume.pdf" download>
-            <FaDownload />
-          </a>
-        </div> */}
-        <div className="profile-links">
-          <a href="https://www.linkedin.com/in/hod-mitrany/" target="_blank"><FaLinkedin /> <span className="link-text">LinkedIn</span></a>
-          <a href="https://github.com/hod25" target="_blank"><FaGithub /> <span className="link-text">GitHub</span></a>
-          <ResumeDropdown />
-        </div>
-        <div className="try-button-container">
-          <a href="/search" className="try-button">Try it yourself 🔍</a>
-        </div>
-      <section className="projects-section">
-        <div className="projects-header">
-          <h2>Highlighted Projects</h2>
-          <div className="view-controls">
-            <button
-              className={`view-button ${viewMode === 'grid' ? 'active' : ''}`}
-              onClick={() => setViewMode('grid')}
-              title="Grid View"
+
+        <header className="profile-header">
+          <h1>Hello, I&apos;m Hod Mitrany</h1>
+          {bio && <p className="profile-bio">{bio}</p>}
+
+          <div className="profile-links">
+            <a
+              href="https://www.linkedin.com/in/hod-mitrany/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="profile-link"
+              aria-label="LinkedIn"
             >
-              ⊞
-            </button>
-            <button
-              className={`view-button ${viewMode === 'two-per-row' ? 'active' : ''}`}
-              onClick={() => setViewMode('two-per-row')}
-              title="Two Per Row"
+              <FaLinkedin aria-hidden="true" />
+              <span className="link-text">LinkedIn</span>
+            </a>
+            <a
+              href="https://github.com/hod25"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="profile-link"
+              aria-label="GitHub"
             >
-              ⚏
-            </button>
-            <button
-              className={`view-button ${viewMode === 'one-per-row' ? 'active' : ''}`}
-              onClick={() => setViewMode('one-per-row')}
-              title="One Per Row"
-            >
-              ▬
-            </button>
+              <FaGithub aria-hidden="true" />
+              <span className="link-text">GitHub</span>
+            </a>
+            <ResumeDropdown />
           </div>
-        </div>
-        <div className={`projects-container ${viewMode}-view`}>
+
+          <div className="try-button-container">
+            <Link href="/search" className="try-button">
+              Try it yourself 🔍
+            </Link>
+          </div>
+        </header>
+
+        <section className="projects-section">
+          <div className="projects-header">
+            <h2>Highlighted Projects</h2>
+            <ViewControls viewMode={viewMode} onChange={setViewMode} />
+          </div>
+
           {loading ? (
-          <div className="spinner-container">
-          <div className="spinner" />
-        </div>
+            <div className="spinner-container" role="status" aria-label="Loading projects">
+              <div className="spinner" />
+            </div>
+          ) : error ? (
+            <p className="error-message" role="alert">
+              ⚠️ {error}
+            </p>
+          ) : repos.length === 0 ? (
+            <p className="empty-message">No highlighted projects found.</p>
           ) : (
-            repos.map((repo: any) => (
-              <RepoCard
-                key={repo.id}
-                name={repo.name}
-                description={repo.description}
-                html_url={repo.html_url}
-                language={repo.language}
-                viewMode={viewMode}
-              />
-            ))
+            <div className={`projects-container ${viewMode}-view`}>
+              {repos.map((repo) => (
+                <RepoCard
+                  key={repo.id}
+                  name={repo.name}
+                  description={repo.description}
+                  html_url={repo.html_url}
+                  language={repo.language}
+                  stargazers_count={repo.stargazers_count}
+                  readmeHtml={repo.readmeHtml}
+                />
+              ))}
+            </div>
           )}
-        </div>
-      </section>
-          </main>
+        </section>
+      </main>
+
       <footer className="site-footer">
         <div className="footer-content">
           <p>© {new Date().getFullYear()} Built by Hod Mitrany</p>
-          {!darkMode && (
-            <a href="https://www.netlify.com" className="netlify-badge">
-              <img src="https://www.netlify.com/assets/badges/netlify-badge-light.svg" alt="Deploys by Netlify" />
-            </a>
-          )}
-          {darkMode && (
-            <a href="https://www.netlify.com" className="netlify-badge">
-              <img src="https://www.netlify.com/assets/badges/netlify-badge-dark.svg" alt="Deploys by Netlify" />
-            </a>
-          )}
+          <a
+            href="https://www.netlify.com"
+            className="netlify-badge"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src={
+                darkMode
+                  ? "https://www.netlify.com/assets/badges/netlify-badge-dark.svg"
+                  : "https://www.netlify.com/assets/badges/netlify-badge-light.svg"
+              }
+              alt="Deploys by Netlify"
+            />
+          </a>
         </div>
       </footer>
     </div>
-  );  
+  );
 }

@@ -4,15 +4,14 @@ After=network.target
 
 [Service]
 Type=simple
-User=root
-WorkingDirectory=/root/Portfolio
-ExecStartPre=/usr/bin/npm install
-ExecStartPre=/usr/bin/npm run prebuild
-ExecStartPre=/usr/bin/npm run build
+# Create a dedicated non-root user on the host (e.g. `useradd -r -m portfolio`)
+User=portfolio
+WorkingDirectory=/srv/portfolio
+Environment=NODE_ENV=production
+EnvironmentFile=-/etc/portfolio.env
 ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=5
-Environment=NODE_ENV=production
 
 [Install]
 WantedBy=multi-user.target

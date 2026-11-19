@@ -1,36 +1,53 @@
-"use client";
+import { FaStar } from "react-icons/fa";
+import ReadmeViewer from "./ReadmeViewer";
 
-import ReadmeViewer from "./ReadmeViewer"; 
-
-type RepoCardProps = {
+export interface RepoCardProps {
   name: string;
-  description: string;
+  description: string | null;
   html_url: string;
   language: string | null;
-  viewMode?: 'grid' | 'two-per-row' | 'one-per-row';
-};
+  stargazers_count?: number;
+  readmeHtml: string;
+}
 
-export default function RepoCard({ name, description, html_url, language, viewMode = 'grid' }: RepoCardProps) {
+export default function RepoCard({
+  name,
+  description,
+  html_url,
+  language,
+  stargazers_count = 0,
+  readmeHtml,
+}: RepoCardProps) {
   return (
-    <div className="project-card">
-      {/* <h3 className="text-xl font-bold mb-2">{name}</h3> */}
-      {/* <p className="text-gray-600 mb-2">{description || 'No description'}</p> */}
-
-            {/* מציג את ה-README */}
-            <div className="mt-4">
-        <ReadmeViewer repoUrl={html_url} />
+    <article className="project-card">
+      <div className="project-card-header">
+        <h3>{name}</h3>
+        <div className="project-meta">
+          {language && <span className="language-badge">{language}</span>}
+          {stargazers_count > 0 && (
+            <span className="stars-badge" aria-label={`${stargazers_count} stars`}>
+              <FaStar aria-hidden="true" /> {stargazers_count}
+            </span>
+          )}
+        </div>
       </div>
 
-      {/* <p className="text-sm text-blue-500">{language}</p> */}
+      {readmeHtml ? (
+        <div className="readme-wrapper">
+          <ReadmeViewer html={readmeHtml} />
+        </div>
+      ) : (
+        description && <p className="project-description">{description}</p>
+      )}
+
       <a
         href={html_url}
-        className="view-button flex items-center justify-center text-center"
+        className="view-button"
         target="_blank"
         rel="noopener noreferrer"
       >
-        {/* {name} */}
         View on GitHub
       </a>
-    </div>
+    </article>
   );
 }
