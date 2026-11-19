@@ -5,12 +5,13 @@ npm-debug.log*
 # Build output
 dist/
 build/
-
-node_modules/
 .next/
 out/
-.env
-tsconfig.json
-next-env.d.ts
 
+# Environment
+.env
 .env.local
+
+# Next.js generated
+next-env.d.ts
+*.tsbuildinfo
