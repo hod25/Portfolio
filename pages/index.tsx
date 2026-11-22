@@ -79,7 +79,6 @@ export default function Home({ initialRepos, initialBio }: HomeProps) {
   return (
     <div className="page-wrapper">
       <Head>
-        <link rel="icon" href="/Black Briefcase Icon.png" />
         <title>Hod Mitrany | GitHub Portfolio</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta

@@ -64,7 +64,6 @@ export default function SearchPage() {
   return (
     <div className="page-wrapper">
       <Head>
-        <link rel="icon" href="/Black Briefcase Icon.png" />
         <title>GitHub Portfolio Viewer</title>
         <meta name="description" content="View any GitHub user's portfolio and highlighted projects" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
