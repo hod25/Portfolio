@@ -8,7 +8,7 @@ An **automated GitHub portfolio** built with **Next.js** and **TypeScript** that
 
 - ⚡ **Fast & SEO-Friendly (ISR)** – Home page pre-renders GitHub projects via Incremental Static Regeneration (`revalidate: 1h`) with graceful client-side fallback.
 - 🔍 **GitHub Portfolio Viewer (`/search`)** – Search any GitHub username to inspect their highlighted repositories via a cached server-side API route (`/api/github`).
-- 🛡️ **Safe README Previews** – Parses Markdown with `marked`, resolves relative GitHub image URLs automatically, and sanitizes HTML with `sanitize-html` to prevent XSS.
+- 🛡️ **Safe README Previews** – Parses Markdown with `marked`, resolves relative GitHub image URLs automatically, and sanitizes HTML with `xss` to prevent XSS.
 - 📄 **Live Resume Endpoint (`/api/resume`)** – Streams the latest PDF directly from Google Docs with HTTP caching and a local fallback (`public/Hod_Mitrany_Resume.pdf`).
 - 🎨 **Dark / Light Mode** – Respects system preference, persists in `localStorage`, and initializes before first paint to prevent theme flicker.
 - 📐 **Flexible Layouts & Responsive UI** – Switch between Grid, Two-Per-Row, and One-Per-Row views on desktop, with an accessible mobile-first layout.
@@ -20,7 +20,7 @@ An **automated GitHub portfolio** built with **Next.js** and **TypeScript** that
 - [Next.js 15](https://nextjs.org/) (Pages Router, ISR, API Routes)
 - [React 19](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/) (`strict` mode)
-- [marked](https://marked.js.org/) & [sanitize-html](https://github.com/apostrophecms/sanitize-html)
+- [marked](https://marked.js.org/) & [xss](https://github.com/leizongmin/js-xss)
 - [GitHub REST API](https://docs.github.com/en/rest)
 
 ---

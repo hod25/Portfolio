@@ -1,16 +1,39 @@
 import { Marked } from "marked";
-import sanitizeHtml from "sanitize-html";
+import { filterXSS, escapeAttrValue, IWhiteList } from "xss";
 
-const ALLOWED_TAGS = [
-  "h1", "h2", "h3", "h4", "h5", "h6",
-  "p", "br", "hr",
-  "ul", "ol", "li",
-  "blockquote", "pre", "code",
-  "strong", "em", "b", "i", "del", "s",
-  "a", "img",
-  "table", "thead", "tbody", "tr", "th", "td",
-  "span", "div",
-];
+const ALLOWED_TAGS: IWhiteList = {
+  h1: [],
+  h2: [],
+  h3: [],
+  h4: [],
+  h5: [],
+  h6: [],
+  p: [],
+  br: [],
+  hr: [],
+  ul: [],
+  ol: [],
+  li: [],
+  blockquote: [],
+  pre: [],
+  code: ["class"],
+  strong: [],
+  em: [],
+  b: [],
+  i: [],
+  del: [],
+  s: [],
+  a: ["href", "title", "target", "rel"],
+  img: ["src", "alt", "title", "width", "height", "loading"],
+  table: [],
+  thead: [],
+  tbody: [],
+  tr: [],
+  th: [],
+  td: [],
+  span: [],
+  div: [],
+};
 
 function resolveRelativeUrl(
   src: string,
@@ -19,8 +42,11 @@ function resolveRelativeUrl(
   branch: string
 ): string {
   const trimmed = src.trim();
-  if (/^(https?:)?\/\//i.test(trimmed) || trimmed.startsWith("data:")) {
+  if (/^https?:\/\//i.test(trimmed)) {
     return trimmed;
+  }
+  if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed) || trimmed.startsWith("//")) {
+    return "";
   }
   const cleanPath = trimmed.replace(/^\.?\//, "");
   return `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${encodeURIComponent(branch)}/${cleanPath}`;
@@ -58,36 +84,26 @@ export async function renderReadmePreview(
 
   const rawHtml = await markedInstance.parse(snippet);
 
-  return sanitizeHtml(rawHtml, {
-    allowedTags: ALLOWED_TAGS,
-    allowedAttributes: {
-      a: ["href", "title", "target", "rel"],
-      img: ["src", "alt", "title", "width", "height"],
-      code: ["class"],
-    },
-    allowedSchemes: ["http", "https"],
-    transformTags: {
-      a: (_tagName, attribs) => ({
-        tagName: "a",
-        attribs: {
-          ...attribs,
-          target: "_blank",
-          rel: "noopener noreferrer",
-        },
-      }),
-      img: (_tagName, attribs) => {
-        const src = attribs.src
-          ? resolveRelativeUrl(attribs.src, owner, repo, branch)
-          : "";
-        return {
-          tagName: "img",
-          attribs: {
-            ...attribs,
-            src,
-            loading: "lazy",
-          },
-        };
-      },
+  return filterXSS(rawHtml, {
+    whiteList: ALLOWED_TAGS,
+    stripIgnoreTag: true,
+    stripIgnoreTagBody: ["script", "style"],
+    onTagAttr(tag, name, value) {
+      if (tag === "a" && name === "href") {
+        const trimmed = value.trim();
+        if (!/^https?:\/\//i.test(trimmed)) {
+          return "";
+        }
+        return `href="${escapeAttrValue(trimmed)}" target="_blank" rel="noopener noreferrer"`;
+      }
+      if (tag === "img" && name === "src") {
+        const resolved = resolveRelativeUrl(value, owner, repo, branch);
+        if (!resolved) {
+          return "";
+        }
+        return `src="${escapeAttrValue(resolved)}" loading="lazy"`;
+      }
+      return undefined;
     },
   });
 }
