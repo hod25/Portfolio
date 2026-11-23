@@ -1,0 +1,796 @@
+/* Home page. Everything is scoped under .home so /search keeps its own look.
+   Colours come from the theme variables in globals.css. */
+
+.home {
+  --wrap: 1120px;
+  --radius: 14px;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --ok: #16a34a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.home h1,
+.home h2,
+.home h3 {
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.home p {
+  margin: 0;
+}
+
+.home a:focus-visible,
+.home button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.home .wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.home .muted {
+  color: var(--text-muted);
+}
+
+.home .small {
+  font-size: 0.85rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  background: var(--accent);
+  color: var(--accent-text);
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+}
+
+/* Navigation */
+.home .nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.home .nav-inner {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0.7rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.home .nav-logo {
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-decoration: none;
+  color: var(--accent-text);
+  background: var(--accent);
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.home .nav nav {
+  margin-left: auto;
+}
+
+.home .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.4rem;
+  margin: 0;
+  padding: 0;
+}
+
+.home .nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.home .nav-links a:hover {
+  color: var(--heading);
+}
+
+.home .icon-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.home .icon-btn:hover {
+  background: var(--surface-hover);
+}
+
+/* Hero */
+.home .hero {
+  padding: 5rem 0 3.5rem;
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, var(--accent-soft), transparent 70%),
+    var(--bg);
+}
+
+.home .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+}
+
+.home .status-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 25%, transparent);
+}
+
+.home .hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.05;
+  margin-top: 1.4rem;
+  font-weight: 800;
+}
+
+.home .hero-role {
+  display: block;
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 0.6rem;
+  letter-spacing: 0;
+}
+
+.home .hero-intro {
+  max-width: 640px;
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: var(--text);
+  margin-top: 1.25rem;
+}
+
+.home .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.home .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.home .btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  color: var(--heading);
+  transform: translateY(-1px);
+}
+
+.home .btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.home .btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--accent-text);
+}
+
+/* Stats */
+.home .stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 3rem 0 0;
+}
+
+.home .stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.home .stat dd {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+}
+
+.home .stat dt {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.home .stats-compact {
+  margin-top: 1.75rem;
+}
+
+.home .stats-compact .stat dd {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+/* Sections */
+.home .section {
+  padding: 5rem 0;
+}
+
+.home .section-alt {
+  background: var(--surface-subtle);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.home .section-title {
+  font-size: clamp(1.7rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+}
+
+.home .kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.home .lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text);
+  max-width: 720px;
+}
+
+.home .lead + .lead {
+  margin-top: 1rem;
+}
+
+.home .two-col {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Skills */
+.home .skills {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.home .skill-group h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.home .chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.home .chip {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.home .chips-sm .chip {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  border-color: transparent;
+}
+
+/* Timeline */
+.home .timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 2px solid var(--border);
+  display: grid;
+  gap: 2rem;
+}
+
+.home .timeline-item {
+  position: relative;
+}
+
+.home .timeline-item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.5rem - 7px);
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--surface-subtle);
+}
+
+.home .timeline-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.home .timeline-head h3 {
+  font-size: 1.1rem;
+}
+
+.home .timeline-org {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.home .timeline-period {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.home .timeline-item ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+  line-height: 1.65;
+}
+
+/* Home lab */
+.home .lab-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+.home .arch {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.home .arch-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.home .arch-node {
+  fill: var(--surface-subtle);
+  stroke: var(--border);
+  stroke-width: 1.2;
+}
+
+.home .arch-edge {
+  fill: var(--surface);
+}
+
+.home .arch-vm {
+  fill: var(--badge-bg);
+  stroke: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.home .arch-store {
+  fill: color-mix(in srgb, var(--ok) 14%, var(--surface));
+  stroke: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+
+.home .arch-host {
+  fill: color-mix(in srgb, var(--accent) 5%, var(--surface));
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+.home .arch-label {
+  fill: var(--heading);
+  font-size: 14px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.home .arch-host-label {
+  fill: var(--accent);
+}
+
+.home .arch-sub {
+  fill: var(--text-muted);
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.home .arch-chip {
+  fill: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.home .arch-group {
+  fill: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.home .arch-line {
+  stroke: var(--text-muted);
+  stroke-width: 1.6;
+  fill: none;
+}
+
+.home .arch-dashed {
+  stroke-dasharray: 4 4;
+}
+
+.home .arch-arrowhead {
+  fill: var(--text-muted);
+}
+
+.home .arch-caption {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.home .check-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+  line-height: 1.6;
+}
+
+.home .check-list li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.home .check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 0.7rem;
+  height: 0.4rem;
+  border-left: 2.5px solid var(--ok);
+  border-bottom: 2.5px solid var(--ok);
+  transform: rotate(-45deg);
+}
+
+.home .story {
+  margin: 1.5rem 0 1rem;
+  padding: 1.1rem 1.2rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--accent-soft);
+}
+
+.home .story h3 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.home .story p {
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
+/* Projects */
+.home .project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.home .card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.home .card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+
+.home .card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.home .card h3 {
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.home .badge {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ok) 15%, transparent);
+  color: var(--ok);
+}
+
+.home .card > p {
+  color: var(--text);
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+.home .card-points {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.home .card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.home .card-link svg:last-child {
+  font-size: 0.75rem;
+  transition: transform 0.15s ease;
+}
+
+.home .card-link:hover svg:last-child {
+  transform: translateX(3px);
+}
+
+.home .more {
+  margin-top: 2.5rem;
+}
+
+.home .more h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.home .more-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem 2rem;
+}
+
+.home .more-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.home .more-list a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home .more-lang {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.home .more-desc {
+  flex-basis: 100%;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.home .viewer-cta {
+  margin-top: 2rem;
+  color: var(--text-muted);
+}
+
+.home .viewer-cta a {
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.home .viewer-cta svg {
+  font-size: 0.75rem;
+}
+
+/* Contact & footer */
+.home .contact {
+  text-align: center;
+}
+
+.home .contact .lead {
+  margin: 0 auto;
+}
+
+.home .contact .hero-actions {
+  justify-content: center;
+}
+
+.home .footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+.home .footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .home .two-col,
+  .home .lab-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .home .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .home .nav-links {
+    display: none;
+  }
+
+  .home .nav nav {
+    margin-left: auto;
+  }
+
+  .home .hero {
+    padding: 3rem 0 2.5rem;
+  }
+
+  .home .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home .section {
+    padding: 3.5rem 0;
+  }
+
+  .home .project-grid,
+  .home .more-list {
+    grid-template-columns: 1fr;
+  }
+
+  .home .btn {
+    flex: 1 1 calc(50% - 0.75rem);
+    justify-content: center;
+  }
+
+  .home .contact .btn-primary {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home *,
+  .home *::before,
+  .home *::after {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keep anchored sections clear of the sticky nav */
+.home section[id] {
+  scroll-margin-top: 4rem;
+}
+
+/* On phones keep the diagram legible and let it scroll sideways */
+@media (max-width: 720px) {
+  .home .arch {
+    overflow-x: auto;
+  }
+
+  .home .arch-svg {
+    min-width: 600px;
+  }
+}
