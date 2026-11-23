@@ -2,7 +2,7 @@ import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import RepoCard from "../components/RepoCard";
 import ResumeDropdown from "../components/ResumeDropdown";
 import { useTheme } from "../components/ThemeContext";
@@ -10,6 +10,23 @@ import ViewControls, { ViewMode } from "../components/ViewControls";
 import { fetchPortfolioData, GitHubRepo, PortfolioData } from "../lib/github";
 
 const DEFAULT_USERNAME = "hod25";
+const CONTACT_EMAIL = "hodmitrany@gmail.com";
+
+const SKILL_GROUPS: { label: string; items: string[] }[] = [
+  { label: "Infrastructure", items: ["Proxmox VE", "Docker", "TrueNAS / ZFS", "Linux", "VMware"] },
+  { label: "Networking & Security", items: ["Cloudflare Zero Trust", "Twingate", "WireGuard", "Nginx Proxy Manager", "Pi-hole"] },
+  { label: "Cloud & CI/CD", items: ["AWS", "GitHub Actions", "Netlify", "Dependabot"] },
+  { label: "Development", items: ["Python", "TypeScript", "Node.js", "React", "Next.js", "C#", "Java"] },
+];
+
+const HOMELAB_POINTS: string[] = [
+  "Proxmox host running 2 VMs and 5 LXC containers: Home Assistant, TrueNAS, Jellyfin (iGPU transcoding), Pi-hole DNS and a Docker stack.",
+  "Immich photo platform for 6 users with 85K+ photos, stored on a ZFS mirror (2×4TB).",
+  "Layered backups: nightly vzdump to NFS, daily/weekly ZFS snapshots and 5 off-site sync jobs, with rclone crypt for sensitive data.",
+  "Configuration kept in Git with automated daily pushes and age-encrypted secrets.",
+  "Monitoring with systemd failure hooks, Uptime Kuma, an external healthchecks.io heartbeat and phone alerts via Home Assistant.",
+  "Remote access through Cloudflare Tunnel and Twingate (ZTNA), migrated from WireGuard + Nginx Proxy Manager.",
+];
 
 interface HomeProps {
   initialRepos: GitHubRepo[];
@@ -79,21 +96,21 @@ export default function Home({ initialRepos, initialBio }: HomeProps) {
   return (
     <div className="page-wrapper">
       <Head>
-        <title>Hod Mitrany | GitHub Portfolio</title>
+        <title>Hod Mitrany | Junior DevOps Engineer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
-          content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח, GitHub Portfolio"
+          content="Hod Mitrany – Junior DevOps engineer: self-hosted infrastructure, automation, CI/CD and software projects."
         />
         <meta
           name="keywords"
-          content="Hod Mitrany, הוד מיטרני, GitHub Portfolio, פורטפוליו, קוד פתוח, פיתוח תוכנה"
+          content="Hod Mitrany, הוד מיטרני, DevOps, Proxmox, Docker, CI/CD, Portfolio, פורטפוליו"
         />
         <meta name="author" content="Hod Mitrany" />
-        <meta property="og:title" content="Hod Mitrany | GitHub Portfolio" />
+        <meta property="og:title" content="Hod Mitrany | Junior DevOps Engineer" />
         <meta
           property="og:description"
-          content="הפורטפוליו של הוד מיטרני - מפתח תוכנה, פרויקטים, קוד פתוח"
+          content="Self-hosted infrastructure, automation, CI/CD and software projects."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://portfolio.7112000.xyz" />
@@ -112,6 +129,7 @@ export default function Home({ initialRepos, initialBio }: HomeProps) {
 
         <header className="profile-header">
           <h1>Hello, I&apos;m Hod Mitrany</h1>
+          <p className="profile-role">Junior DevOps Engineer · Infrastructure &amp; Automation</p>
           {bio && <p className="profile-bio">{bio}</p>}
 
           <div className="profile-links">
@@ -135,6 +153,14 @@ export default function Home({ initialRepos, initialBio }: HomeProps) {
               <FaGithub aria-hidden="true" />
               <span className="link-text">GitHub</span>
             </a>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="profile-link"
+              aria-label="Email"
+            >
+              <FaEnvelope aria-hidden="true" />
+              <span className="link-text">Email</span>
+            </a>
             <ResumeDropdown />
           </div>
 
@@ -144,6 +170,45 @@ export default function Home({ initialRepos, initialBio }: HomeProps) {
             </Link>
           </div>
         </header>
+
+        <section className="about-section" aria-labelledby="about-heading">
+          <h2 id="about-heading">About</h2>
+          <p>
+            Final-semester Computer Science student (graduating 2027) and former IDF IT team lead
+            (7 technicians, 600+ users). I build and run my own self-hosted infrastructure, automate
+            operations with Python, Bash and systemd, and have worked as a Python developer at BioView,
+            preparing image datasets for AI training.
+          </p>
+          <div className="skills-grid">
+            {SKILL_GROUPS.map((group) => (
+              <div key={group.label} className="skill-group">
+                <h3>{group.label}</h3>
+                <ul className="skill-chips">
+                  {group.items.map((item) => (
+                    <li key={item} className="language-badge">{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="featured-section" aria-labelledby="homelab-heading">
+          <article className="project-card featured-card">
+            <div className="project-card-header">
+              <h2 id="homelab-heading">Featured: Self-Hosted Infrastructure (Home Lab)</h2>
+            </div>
+            <ul className="featured-list">
+              {HOMELAB_POINTS.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+            <p className="featured-note">
+              The configuration repository is private because it describes a live network. Happy to walk
+              through the architecture in an interview.
+            </p>
+          </article>
+        </section>
 
         <section className="projects-section">
           <div className="projects-header">
