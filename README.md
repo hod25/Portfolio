@@ -1,56 +1,69 @@
-﻿# GitHub Portfolio
+﻿# Hod Mitrany – Portfolio
 
-An **automated GitHub portfolio** built with **Next.js** and **TypeScript** that dynamically fetches and showcases public repositories with sanitized README previews, language badges, star counts, and a live GitHub user search viewer.
+[![CI](https://github.com/hod25/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/hod25/Portfolio/actions/workflows/ci.yml)
+
+Personal portfolio of a junior DevOps engineer, live at **[portfolio.7112000.xyz](https://portfolio.7112000.xyz)**.
+Built with **Next.js** and **TypeScript**, tested by **GitHub Actions** on every pull request and deployed automatically to **Netlify**.
 
 ---
 
 ## ✨ Features
 
-- ⚡ **Fast & SEO-Friendly (ISR)** – Home page pre-renders GitHub projects via Incremental Static Regeneration (`revalidate: 1h`) with graceful client-side fallback.
-- 🔍 **GitHub Portfolio Viewer (`/search`)** – Search any GitHub username to inspect their highlighted repositories via a cached server-side API route (`/api/github`).
-- 🛡️ **Safe README Previews** – Parses Markdown with `marked`, resolves relative GitHub image URLs automatically, and sanitizes HTML with `xss` to prevent XSS.
-- 📄 **Live Resume Endpoint (`/api/resume`)** – Streams the latest PDF directly from Google Docs with HTTP caching and a local fallback (`public/Hod_Mitrany_Resume.pdf`).
-- 🎨 **Dark / Light Mode** – Respects system preference, persists in `localStorage`, and initializes before first paint to prevent theme flicker.
-- 📐 **Flexible Layouts & Responsive UI** – Switch between Grid, Two-Per-Row, and One-Per-Row views on desktop, with an accessible mobile-first layout.
+- 🧭 **Single-page portfolio**: hero, about and skills, experience timeline, featured home-lab write-up with an architecture diagram, curated projects and contact.
+- 🗂️ **Content as data**: all copy lives in [`data/profile.ts`](data/profile.ts), so updating the site means editing one typed file.
+- ⚡ **ISR**: the "More on GitHub" list is pre-rendered from the GitHub API and revalidated hourly.
+- 🔍 **GitHub Portfolio Viewer (`/search`)**: look up any GitHub user and preview their repositories with sanitized README snippets (`marked` + `xss`, UTF-8/UTF-16 aware).
+- 📄 **Resume endpoint (`/api/resume`)**: serves the PDF versioned in `public/`, inline or as a download.
+- 🎨 **Dark / light mode** without a flash on load, responsive layout, keyboard focus states and reduced-motion support.
+
+---
+
+## 🔁 CI/CD
+
+| Stage | Tool | What it does |
+| :--- | :--- | :--- |
+| CI | GitHub Actions ([`ci.yml`](.github/workflows/ci.yml)) | `npm ci` → type-check → `npm audit` (prod deps, high+) → `next build` → resume PDF check |
+| Dependency updates | Dependabot ([`dependabot.yml`](.github/dependabot.yml)) | Weekly grouped PRs for npm packages and GitHub Actions |
+| CD | Netlify | Deploy preview for every PR, production deploy on merge to `main` |
 
 ---
 
 ## 🛠 Tech Stack
 
-- [Next.js 15](https://nextjs.org/) (Pages Router, ISR, API Routes)
-- [React 19](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/) (`strict` mode)
-- [marked](https://marked.js.org/) & [xss](https://github.com/leizongmin/js-xss)
-- [GitHub REST API](https://docs.github.com/en/rest)
+- [Next.js 16](https://nextjs.org/) (Pages Router, ISR, API Routes) · [React 19](https://react.dev/) · [TypeScript](https://www.typescriptlang.org/) (`strict`)
+- [marked](https://marked.js.org/) & [xss](https://github.com/leizongmin/js-xss) for safe README rendering
+- [react-icons](https://react-icons.github.io/react-icons/)
+- Plain CSS with theme variables (no UI framework)
 
 ---
 
 ## 📂 Project Structure
 
 ```text
+├── .github/
+│   ├── workflows/ci.yml        # CI pipeline
+│   └── dependabot.yml          # Automated dependency updates
 ├── components/
-│   ├── ReadmeViewer.tsx    # Renders sanitized README HTML & hides broken images
-│   ├── RepoCard.tsx        # Project card with language badge, stars, and README preview
-│   ├── ResumeDropdown.tsx  # Accessible resume menu (Download, View PDF, Google Docs)
-│   ├── ThemeContext.tsx    # Shared dark/light theme state
-│   └── ViewControls.tsx    # Layout switcher (grid / 2-per-row / 1-per-row)
+│   ├── ArchitectureDiagram.tsx # Theme-aware SVG of the home lab (no internal addresses)
+│   ├── ReadmeViewer.tsx        # Renders sanitized README HTML
+│   ├── RepoCard.tsx            # Repository card used by /search
+│   ├── ThemeContext.tsx        # Shared dark/light theme state
+│   └── ViewControls.tsx        # Layout switcher for /search
+├── data/
+│   └── profile.ts              # All home-page content
 ├── lib/
-│   ├── github.ts           # Typed GitHub REST API client with token fallback
-│   └── markdown.ts         # Markdown parsing, relative image resolution & HTML sanitization
+│   ├── github.ts               # Typed GitHub REST client with token fallback
+│   └── markdown.ts             # README snippet extraction & sanitization
 ├── pages/
-│   ├── api/
-│   │   ├── github.ts       # Cached GitHub portfolio API route
-│   │   └── resume.ts       # Cached resume PDF proxy with local fallback
-│   ├── search/index.tsx    # Interactive GitHub username search page
-│   ├── _app.tsx            # ThemeProvider wrapper & global styles
-│   ├── _document.tsx       # Zero-FOUC theme initialization script
-│   ├── download.tsx        # Direct resume download redirect page
-│   └── index.tsx           # Main portfolio page (ISR)
+│   ├── api/github.ts           # Cached GitHub portfolio API route
+│   ├── api/resume.ts           # Resume PDF endpoint
+│   ├── search/index.tsx        # GitHub portfolio viewer
+│   ├── download.tsx            # Direct resume download
+│   └── index.tsx               # Home page (ISR)
 ├── styles/
-│   └── globals.css         # Themeable CSS variables & responsive styles
-└── systemd/
-    ├── portfolio.service   # Production systemd unit file
-    └── update.sh           # Deployment script
+│   ├── globals.css             # Theme variables, /search styles
+│   └── home.css                # Home page styles (scoped under .home)
+└── systemd/                    # Optional self-hosted deployment (unit file + update script)
 ```
 
 ---
@@ -64,22 +77,21 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-### Environment Variables (Optional)
-
-Create a `.env.local` file to raise GitHub API rate limits (recommended for production):
+### Environment Variables (optional)
 
 ```env
 GITHUB_TOKEN=your_github_personal_access_token
 ```
 
-If `GITHUB_TOKEN` is omitted or invalid, the app automatically falls back to unauthenticated GitHub REST API requests.
+Raises GitHub API rate limits. If it is missing or invalid, the app falls back to unauthenticated requests.
 
-### Available Scripts
+### Scripts
 
-- `npm run dev` – Start the development server
-- `npm run build` – Build for production
-- `npm start` – Start the production server
-- `npm run typecheck` – Run TypeScript type checking (`tsc --noEmit`)
-- To update the resume, replace `public/Hod_Mitrany_Resume.pdf`
+- `npm run dev` – development server
+- `npm run build` – production build
+- `npm start` – production server
+- `npm run typecheck` – `tsc --noEmit`
+
+To update the resume, replace `public/Hod_Mitrany_Resume.pdf`. To update the site's content, edit `data/profile.ts`.
