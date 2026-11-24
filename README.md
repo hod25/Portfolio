@@ -82,4 +82,4 @@ If `GITHUB_TOKEN` is omitted or invalid, the app automatically falls back to una
 - `npm run build` – Build for production
 - `npm start` – Start the production server
 - `npm run typecheck` – Run TypeScript type checking (`tsc --noEmit`)
-- `npm run download-resume` – Refresh the local fallback PDF in `public/Hod_Mitrany_Resume.pdf`
+- To update the resume, replace `public/Hod_Mitrany_Resume.pdf`

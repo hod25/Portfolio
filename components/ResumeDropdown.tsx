@@ -3,8 +3,6 @@ import { FaFileAlt } from "react-icons/fa";
 
 const RESUME_VIEW_URL = "/api/resume";
 const RESUME_DOWNLOAD_URL = "/api/resume?download=1";
-const RESUME_DOCS_URL =
-  "https://docs.google.com/document/d/1oCLnmsEQrpIXQk7-LObgFLzX1nPyVlUW/edit?usp=sharing";
 
 export default function ResumeDropdown() {
   const [open, setOpen] = useState(false);
@@ -81,15 +79,6 @@ export default function ResumeDropdown() {
             onClick={() => setOpen(false)}
           >
             View PDF
-          </a>
-          <a
-            href={RESUME_DOCS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            role="menuitem"
-            onClick={() => setOpen(false)}
-          >
-            Google Docs
           </a>
         </div>
       )}

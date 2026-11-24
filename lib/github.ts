@@ -89,6 +89,15 @@ export function hasSignificantContent(content: string): boolean {
   return wordCount >= 10;
 }
 
+// READMEs saved by some Windows editors are UTF-16 with a BOM; response.text()
+// would assume UTF-8 and produce garbage, so honour the BOM explicitly.
+export function decodeReadme(bytes: Uint8Array): string {
+  let encoding = "utf-8";
+  if (bytes[0] === 0xff && bytes[1] === 0xfe) encoding = "utf-16le";
+  else if (bytes[0] === 0xfe && bytes[1] === 0xff) encoding = "utf-16be";
+  return new TextDecoder(encoding).decode(bytes).replace(/\r\n?/g, "\n");
+}
+
 async function fetchRepoReadme(
   owner: string,
   repoName: string,
@@ -103,7 +112,7 @@ async function fetchRepoReadme(
     try {
       const response = await fetch(readmeUrl);
       if (response.ok) {
-        const content = await response.text();
+        const content = decodeReadme(new Uint8Array(await response.arrayBuffer()));
         if (hasSignificantContent(content)) {
           return { content, branch };
         }

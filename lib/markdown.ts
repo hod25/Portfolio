@@ -52,20 +52,36 @@ function resolveRelativeUrl(
   return `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${encodeURIComponent(branch)}/${cleanPath}`;
 }
 
-export function extractReadmeSnippet(markdown: string): string {
-  const lines = markdown
-    .split("\n")
-    .filter((line) => line.trim().length > 0);
+const SNIPPET_MAX_CHARS = 450;
 
-  if (lines.length <= 1) {
+/**
+ * Take the README intro: the title plus whole paragraphs up to the first
+ * `---` or second-level heading, stopping at a paragraph boundary once the
+ * snippet is long enough. Never cuts a paragraph mid-sentence.
+ */
+export function extractReadmeSnippet(markdown: string): string {
+  const blocks = markdown
+    .replace(/\r\n?/g, "\n")
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter((block) => block.length > 0);
+
+  if (blocks.length <= 1) {
     return "";
   }
 
-  const separatorIndex = lines.findIndex((line) => line.trim() === "---");
-  const relevantLines =
-    separatorIndex !== -1 ? lines.slice(0, separatorIndex) : lines.slice(0, 7);
+  const picked: string[] = [];
+  let length = 0;
 
-  return relevantLines.join("\n");
+  for (const [index, block] of blocks.entries()) {
+    const isBreak = /^(-{3,}|\*{3,}|_{3,})$/.test(block) || /^#{2,}\s/.test(block);
+    if (index > 0 && isBreak) break;
+    if (picked.length > 1 && length + block.length > SNIPPET_MAX_CHARS) break;
+    picked.push(block);
+    length += block.length;
+  }
+
+  return picked.join("\n\n");
 }
 
 export async function renderReadmePreview(
