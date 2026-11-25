@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 export default function Home({ moreRepos }: HomeProps) {
   const { darkMode, toggleDarkMode } = useTheme();
   const title = `${PROFILE.name} | ${PROFILE.role}`;
-  const description = `${PROFILE.name}: ${PROFILE.role}. Self-hosted infrastructure, automation, CI/CD and software projects.`;
+  const description = `${PROFILE.name}: ${PROFILE.role}. Full-stack apps, self-hosted infrastructure and CI/CD.`;
 
   return (
     <div className="home">
@@ -53,7 +53,7 @@ export default function Home({ moreRepos }: HomeProps) {
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content={description} />
-        <meta name="keywords" content="Hod Mitrany, הוד מיטרני, DevOps, Proxmox, Docker, CI/CD, GitHub Actions, Portfolio" />
+        <meta name="keywords" content="Hod Mitrany, הוד מיטרני, Software Engineer, Full Stack, DevOps, Node.js, React, Python, Docker, CI/CD, Portfolio" />
         <meta name="author" content={PROFILE.name} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
@@ -274,7 +274,7 @@ export default function Home({ moreRepos }: HomeProps) {
           <div className="wrap">
             <h2 className="section-title">Let&apos;s talk</h2>
             <p className="lead">
-              Looking for a junior DevOps or infrastructure role where I can keep building, automating and
+              Looking for a junior software, full stack or DevOps role where I can keep building, shipping and
               learning. The fastest way to reach me is email.
             </p>
             <div className="hero-actions">

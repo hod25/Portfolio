@@ -4,12 +4,12 @@
 
 export const PROFILE = {
   name: "Hod Mitrany",
-  role: "Junior DevOps Engineer",
-  tagline: "Infrastructure & Automation",
+  role: "Junior Software Engineer",
+  tagline: "Full Stack & DevOps",
   intro:
-    "I build and run my own self-hosted infrastructure, automate it with Python, Bash and systemd, " +
-    "and ship it with CI/CD. Final-semester Computer Science student, former IDF IT team lead.",
-  availability: "Open to Junior DevOps / Infrastructure roles · Israel",
+    "I build full-stack web and mobile apps with Node.js, React and Python, run my own self-hosted infrastructure, " +
+    "and ship everything with tests and CI/CD. Final-semester Computer Science student, former IDF IT team lead.",
+  availability: "Open to junior software, full stack and DevOps roles · Israel",
   email: "hodmitrany@gmail.com",
   github: "https://github.com/hod25",
   githubUser: "hod25",
@@ -24,18 +24,19 @@ export const STATS: { value: string; label: string }[] = [
 ];
 
 export const ABOUT: string[] = [
-  "My path into DevOps started in the IDF, where I led a 7-person IT support team for more than 600 users. " +
-    "Since then I have worked as a Python developer at BioView, automating the preparation of image datasets for AI training.",
+  "My path into tech started in the IDF, where I led a 7-person IT support team for more than 600 users. " +
+    "Since then I have worked as a Python developer at BioView, automating the preparation of image datasets for AI training, " +
+    "and built full-stack apps from serverless web platforms to a native Android alarm app.",
   "At home I run a Proxmox server my household relies on every day: storage, photos, media, DNS and home automation, " +
     "with layered backups, monitoring and zero open inbound ports. It is where I learn by breaking and fixing real systems.",
 ];
 
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
+  { label: "Development", items: ["TypeScript", "Python", "Node.js", "Express", "React", "Next.js", "Flask", "Socket.io", "Capacitor", "MongoDB", "MySQL", "Java", "C#", "C++"] },
   { label: "Infrastructure", items: ["Proxmox VE", "Docker", "Docker Compose", "TrueNAS", "ZFS", "Linux", "VMware", "Active Directory"] },
   { label: "Networking & Security", items: ["Cloudflare Zero Trust", "Twingate (ZTNA)", "WireGuard", "Nginx Proxy Manager", "Pi-hole", "NFS / SMB"] },
   { label: "Cloud & CI/CD", items: ["AWS EC2", "GitHub Actions", "Netlify", "Dependabot"] },
   { label: "Automation & Monitoring", items: ["Python", "Bash", "systemd timers", "Git", "rclone", "Uptime Kuma", "healthchecks.io"] },
-  { label: "Development", items: ["TypeScript", "Node.js", "React", "Next.js", "Flask", "SQL", "MongoDB", "C#", "Java", "C++"] },
 ];
 
 export interface TimelineItem {
