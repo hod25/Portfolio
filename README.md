@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/hod25/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/hod25/Portfolio/actions/workflows/ci.yml)
 
-Personal portfolio of a junior DevOps engineer, live at **[portfolio.7112000.xyz](https://portfolio.7112000.xyz)**.
+Personal portfolio of a junior software engineer (full stack & DevOps), live at **[portfolio.7112000.xyz](https://portfolio.7112000.xyz)**.
 Built with **Next.js** and **TypeScript**, tested by **GitHub Actions** on every pull request and deployed automatically to **Netlify**.
 
 ---

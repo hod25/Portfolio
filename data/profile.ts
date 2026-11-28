@@ -4,12 +4,12 @@
 
 export const PROFILE = {
   name: "Hod Mitrany",
-  role: "Junior DevOps Engineer",
-  tagline: "Infrastructure & Automation",
+  role: "Junior Software Engineer",
+  tagline: "Full Stack & DevOps",
   intro:
-    "I build and run my own self-hosted infrastructure, automate it with Python, Bash and systemd, " +
-    "and ship it with CI/CD. Final-semester Computer Science student, former IDF IT team lead.",
-  availability: "Open to Junior DevOps / Infrastructure roles · Israel",
+    "I build full-stack web and mobile apps with Node.js, React and Python, run my own self-hosted infrastructure, " +
+    "and ship everything with tests and CI/CD. Final-semester Computer Science student, former IDF IT team lead.",
+  availability: "Open to junior software, full stack and DevOps roles · Israel",
   email: "hodmitrany@gmail.com",
   github: "https://github.com/hod25",
   githubUser: "hod25",
@@ -24,18 +24,19 @@ export const STATS: { value: string; label: string }[] = [
 ];
 
 export const ABOUT: string[] = [
-  "My path into DevOps started in the IDF, where I led a 7-person IT support team for more than 600 users. " +
-    "Since then I have worked as a Python developer at BioView, automating the preparation of image datasets for AI training.",
+  "My path into tech started in the IDF, where I led a 7-person IT support team for more than 600 users. " +
+    "Since then I have worked as a Python developer at BioView, automating the preparation of image datasets for AI training, " +
+    "and built full-stack apps from serverless web platforms to a native Android alarm app.",
   "At home I run a Proxmox server my household relies on every day: storage, photos, media, DNS and home automation, " +
     "with layered backups, monitoring and zero open inbound ports. It is where I learn by breaking and fixing real systems.",
 ];
 
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
+  { label: "Development", items: ["TypeScript", "Python", "Node.js", "Express", "React", "Next.js", "Flask", "Socket.io", "Capacitor", "MongoDB", "MySQL", "Java", "C#", "C++"] },
   { label: "Infrastructure", items: ["Proxmox VE", "Docker", "Docker Compose", "TrueNAS", "ZFS", "Linux", "VMware", "Active Directory"] },
   { label: "Networking & Security", items: ["Cloudflare Zero Trust", "Twingate (ZTNA)", "WireGuard", "Nginx Proxy Manager", "Pi-hole", "NFS / SMB"] },
   { label: "Cloud & CI/CD", items: ["AWS EC2", "GitHub Actions", "Netlify", "Dependabot"] },
   { label: "Automation & Monitoring", items: ["Python", "Bash", "systemd timers", "Git", "rclone", "Uptime Kuma", "healthchecks.io"] },
-  { label: "Development", items: ["TypeScript", "Node.js", "React", "Next.js", "Flask", "SQL", "MongoDB", "C#", "Java", "C++"] },
 ];
 
 export interface TimelineItem {
@@ -127,37 +128,44 @@ export const PROJECTS: Project[] = [
     name: "Hourly Timer for Home Assistant",
     repo: "hourly-timer-integration",
     summary: "Open-source Home Assistant integration with a circular timer card for switches, lights and fans.",
-    highlights: ["Published and installable via HACS.", "Custom Lovelace card plus a Python integration."],
-    stack: ["JavaScript", "Python", "Home Assistant", "HACS"],
+    highlights: [
+      "Published and installable via HACS.",
+      "pytest test suite and GitHub Actions validation on every push.",
+    ],
+    stack: ["Python", "JavaScript", "pytest", "GitHub Actions", "HACS"],
     badge: "Open source",
   },
   {
     name: "Wedding Invitation System",
     repo: "Wedding-system",
-    summary: "Guest management web app with a WhatsApp bot that sends invitations and tracks RSVPs.",
-    highlights: ["Excel import, QR codes and RSVP tracking.", "Selenium-driven WhatsApp bot synced with the web server."],
-    stack: ["Python", "Flask", "SQLAlchemy", "Selenium"],
-  },
-  {
-    name: "ProSafe: Helmet Detection",
-    repo: "FSD-Project",
-    summary: "Real-time computer vision that detects workers without helmets in live camera streams.",
-    highlights: ["YOLO-based detection pipeline.", "Next.js dashboard for live monitoring."],
-    stack: ["Python", "YOLO", "Next.js"],
+    summary: "Guest management web app with a WhatsApp bot that sent invitations to real guests and tracked RSVPs.",
+    highlights: [
+      "Excel import, QR codes and RSVP tracking.",
+      "Dockerized, with a Selenium-driven WhatsApp bot synced to the web server.",
+    ],
+    stack: ["Python", "Flask", "Selenium", "Docker"],
+    badge: "Real users",
   },
   {
     name: "Aura eCommerce",
     repo: "aura",
     summary: "Full-stack eCommerce platform with catalog, auth, cart and checkout.",
-    highlights: ["Typed Node.js/Express + MySQL backend.", "React storefront with Vite, TypeScript and Tailwind."],
-    stack: ["TypeScript", "React", "Express", "MySQL"],
+    highlights: [
+      "React frontend, Express API and MySQL orchestrated with Docker Compose.",
+      "Health checks, service dependencies and an auto-seeded database.",
+    ],
+    stack: ["TypeScript", "React", "Express", "MySQL", "Docker Compose"],
   },
   {
-    name: "SmartSplit PDF Splitter",
-    repo: "smart-pdf-payroll-splitter",
-    summary: "Streamlit app that splits multi-page PDFs such as payslips into per-person files.",
-    highlights: ["Detects names from a configurable anchor field.", "Manual correction, per-page or ZIP download."],
-    stack: ["Python", "Streamlit"],
+    name: "ProSafe: Helmet Detection",
+    repo: "FSD-Project",
+    summary: "Team project (5 developers): real-time detection of workers without helmets in live camera streams.",
+    highlights: [
+      "My part: work on the YOLO detection algorithm, plus user management, profiles and login.",
+      "Microservices (client, server, detection service) managed with PM2.",
+    ],
+    stack: ["Python", "YOLO", "Next.js", "PM2"],
+    badge: "Team",
   },
 ];
 
